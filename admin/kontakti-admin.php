@@ -1,94 +1,64 @@
 <?php
-include "../config.php";
-include "../server.php";
 $msg = "";
-ob_start();
+include "../server.php";
+include "../config.php";
 
-if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
-  header("Location:../login.php");
-  die();
-}
 ?>
 
-<!DOCTYPE html>
-<html>
+<?php get_AdminHeader("Kategory Admin"); ?>
 
-<head>
-  <?php include('../assets/php/title_bar_img.php'); ?>
-  <title>Kontaktimet</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<div id="layoutSidenav_content">
 
-</head>
+  <div class="container-fluid mt-5 h-100">
+    <?php
+    if (!empty($msg)) {
+      echo '
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>' . $msg . ' </strong>  <br>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;<a href="apliko_online.php"></a></span>
+    </button>
+</div>';
+    }
+    ?>
+    <h3 class="title">Kontakit</h3>
+    <div class="r-table">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">SMS</th>
+            <th scope="col">Opsionet</th>
+          </tr>
+        </thead>
 
-<?php include "../assets/php/admin-navbar.php"; ?>
+        <tbody>
+          <?php
+          $c_sql = "SELECT * from kontakit ";
+          if ($result = mysqli_query($db, $c_sql)) {
+            $i = 1;
+            foreach ($result as $key => $ko_row) {
 
-<div class="container mt-5">
+              //$ko_row['id']
+              echo ' <tr>
+              <td> ' . $i++ . ' </td> 
+              <td> ' . $ko_row['email'] . ' </td>
+              <td> <textarea class="" rows="2" cols="40" readonly=""> ' . $ko_row["sms"] . '</textarea></td>
+              <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_sms_' . $ko_row["id"] . ' ">Fshije</a> </td>
+              </tr>  ';
+            }
+          }
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#ID</th>
-        <th scope="col">Emri</th>
-        <th scope="col">Mbiemri</th>
-        <th scope="col">Email</th>
-        <th scope="col">Telefoni</th>
-        <th scope="col">Mesazhi</th>
-        <th scope="col">Opsionet</th>
-      </tr>
-    <tbody>
+          ?>
 
-      <?php
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-      //Userat
-      $sql = "SELECT * from mesazhi ";
-      $results = mysqli_query($db, $sql);
+</div>
 
-      while (($row = $results->fetch_assoc()) != null) {
-
-        echo "<tr>";
-        echo "<td>" . $row['id'] . "</td>";
-        echo "<td>" . $row['emri'] . "</td>";
-        echo "<td>" . $row['mbiemri'] . "</td>";
-        echo "<td>" . $row['email'] . "</td>";
-        echo "<td>" . $row['telefoni'] . "</td>";
-        echo "<td>  <textarea cols='50' rows='1'> " . $row['mesazhi'] . " </textarea> </td>";
-        echo "
-                    <td>
-                    <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#kontakti_" . $row['id'] . "'>
-                Fshije
-                </button> </td> ";
-        echo "</tr>";
-        echo '
-              <div class="modal fade" id="kontakti_' . $row['id'] . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLongTitle">Fshije Aplikimin</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      A jeni i sigurt q&euml; d&euml;shironi ta fshini k&euml;t&euml; mesazhin
-                      <div class="modal-footer">
-                       <button type="button" class="btn btn-secondary" data-dismiss="modal">JO</button>
-                        <a href="delete/kontakti-admin.php? id=' . $row['id'] . ' "class="btn btn-danger"id="delete_btn" >PO! Fshije</a> 
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-              ';
-      }
-      ?>
-
-      </body>
+</body>
 
 </html>

@@ -70,38 +70,82 @@ $ca_row = $c_result->fetch_assoc();
                     </div>
 
                 </div>
-                <div class="r-table">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Lamia</th>
-                                <th scope="col">Kategorit</th>
-                                <th scope="col">Opsionet</th>
-                            </tr>
-                        </thead>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="r-table">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Lamia</th>
+                                        <th scope="col">Kategorit</th>
+                                        <th scope="col">Opsionet</th>
+                                    </tr>
+                                </thead>
 
-                        <tbody>
-                            <?php
-                            if ($c_result = mysqli_query($db, $c_sql)) {
-                                $i = 1;
-                                foreach ($c_result as $key => $c_row) {
+                                <tbody>
+                                    <?php
+                                    if ($c_result = mysqli_query($db, $c_sql)) {
+                                        $i = 1;
+                                        foreach ($c_result as $key => $c_row) {
 
-                                    //$c_row['id']
-                                    echo ' <tr>
+                                            //$c_row['id']
+                                            echo ' <tr>
                         <td> ' . $i++ . ' </td> 
                         <td> ' . $c_row['lamiaid'] . ' </td>
                         <td> ' . $c_row['emri'] . ' </td>
                         <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_category_' . $c_row["id"] . ' ">Fshije</a> </td>
                         </tr>  ';
-                                }
-                            }
+                                        }
+                                    }
 
-                            ?>
+                                    ?>
 
-                        </tbody>
-                    </table>
+                                </tbody>
+                            </table>
 
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="r-table">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Lamia</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    if ($ca_result = mysqli_query($db, $ca_sql)) {
+                                        $i = 1;
+                                        foreach ($ca_result as $key => $ca_row) {
+                             echo ' <tr>
+                                    <td> ' . $i++ . ' </td> 
+                                    <td> ' . $ca_row['lamiaid'] . ' </td>
+                                    <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_category_delete_' . $ca_row["idLamia"] . ' ">Fshije</a> </td>
+                                    </tr>  
+                                    ';
+                                            get_op_modal(
+                                                "category_delete_",
+                                                $ca_row['idLamia'],
+                                                "Fshirja e Postimit",
+                                                "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini Lamin<b><i>  " . $ca_row['lamiaid'] . " </i></b>  ",
+                                                "Po Fshije"
+
+                                            );
+                                        }
+                                    }
+
+                                    ?>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

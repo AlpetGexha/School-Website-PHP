@@ -25,6 +25,9 @@ img {
     max-width: 100%
 }
 
+.r-table {
+    overflow-x: auto;
+}
 
 /*stili per login dhe register*/
 .my-login-page {

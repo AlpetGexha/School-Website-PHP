@@ -21,85 +21,85 @@ $c_row = $c_result->fetch_assoc();
 <?php get_AdminHeader("Postimet"); ?>
 
 
+
 <div id="layoutSidenav_content">
 
-    <div class="container mt-5 h-100">
-        <?php
-        if (!empty($msg)) {
-            echo '
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>' . $msg . ' </strong>  <br>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;<a href="apliko_online.php"></a></span>
-    </button>
-</div>';
-        }
-        ?>
-        <div class="row justify-content-md-center h-100">
-            <div class="card-wrapper">
-                <div class="card fat">
-                    <div class="card-body">
-                        <h4 class="card-title">Krijo Postime</h4>
+    <div class="container-fluid mt-5 h-100">
 
-                        <form method="POST" action="#" enctype="multipart/form-data">
+        <h3 class="title">Postime</h3>
 
-                            <div class="form-group">
-                                <label>Titulli</label>
-                                <input id="p_titulli" type="text" class="form-control" placeholder="Titulli" name="p_titulli" required="" oninvalid="this.setCustomValidity('Shkruani titullin');" oninput="this.setCustomValidity('');">
-                            </div>
+        <div class="r-table">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Titulli</th>
+                        <th scope="col">P&euml;rshkrimi</th>
+                        <th scope="col">Kategoria</th>
+                        <th scope="col">Postuesis</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Opsionet</th>
+                    </tr>
+                </thead>
 
-                            <label>P&euml;rshkrimi</label>
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" placeholder="P&euml;rshkrimi" id="floatingTextarea2 p_pershkrimi" style="height: auto;" name="p_pershkrimi" required="" oninvalid="this.setCustomValidity('Shkruani P&euml;rshkrimin');" oninput="this.setCustomValidity('')"></textarea>
-                                <label for="floatingTextarea2">Pershkrimi</label>
-                            </div>
+                <tbody>
+                    <?php
+                    require("../config.php");
+                    $c_sql = "SELECT p.id, p.titulli, p.body, p.category, p.date,p.photo, c.emri, u.username from post p, post_categories c, users u WHERE p.category = c.id and p.userid = u.id order by p.id DESC";
+                    if ($result = mysqli_query($db, $c_sql)) {
+                        $i = 1;
 
-                            <div class="mb-3 p_upload">
-                                <label>Foto</label>
-                                <input class="form-control" type="file" id="formFile" name="image" require="" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
-                            </div>
+                        foreach ($result as $key => $post_row) {
+                            //$ko_row['id']
+                            echo ' <tr>
+                        <td> ' . $i++ . ' </td> 
+                        <td> <img src="../assets/img/drejtimet_post/' . $post_row['photo'] . '" class="table-img" alt="Foto" loading="lazy">  </td>
+                        <td> ' . $post_row["titulli"] . ' </td> 
+                       <td> <textarea class="" rows="2" cols="40" readonly=""> ' . $post_row["body"] . '</textarea></td>
+                       <td> ' . $post_row['emri'] . ' </td> 
+                         <td> ' . $post_row['username'] . ' </td>
+                       <td> ' .  date('j F, Y ,h:i:s A', strtotime($post_row['date'])) . ' </td> 
+                       <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_post_delete_' . $post_row["id"] . ' ">Fshije</a> /
+                         <a class="btn btn-primary"  data-toggle="modal" data-target="#modal_post_edit_' . $post_row["id"] . ' ">Nrysho</a> </td>
+                        </tr>  ';
 
-                            <div class="form-group">
-                                <label for="disabledTextInput" class="form-label">Kategorit</label>
-                                <select name="p_kategorit" class="custom-select mb-3">
-                                    <option disabled required=""> Çfar&euml; kategorie &euml;sht&euml; postimi </option>
-                                    <?php
+                            get_op_modal(
+                                "post_delete_",
+                                $post_row['id'],
+                                "Fshirja e Postimit",
+                                "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini Postimin<b><i>  " . $post_row['titulli'] . " </i></b>  ",
+                                "Po Fshije"
 
-                                    foreach ($c_result as $key => $c_row) {
-                                        echo '  <option value=" ' . $c_row['id'] . ' ">'    . $c_row['emri'] . '</option>     ';
-                                    }
+                            );
 
-                                    ?>
-                                </select>
-                            </div>
+                            get_op_modal(
+                                "post_edit_",
+                                $post_row['id'],
+                                "Ndrysho Postimin",
+                                '                          
+                                     <h6>Titulli</h6>
+                                        <input type="text" class="form-control mt-2" name="post_titulli" autofocus="" required="" value="' . $post_row['titulli'] . '">
+                                    <h6 class="mt-4">Teksti</h6>
+                                    <textarea class="form-control" required="" placeholder="" id="floatingTextarea2" style="height: 220px" name="post_body"> ' . $post_row['body'] .
+                                '</textarea>
+                                
+                        ',
+                                "Ndrysho",
+                                "primary"
 
+                            );
+                        }
+                    }
 
-                            <div class="form-group m-0">
-                                <button type="submit" name="create_post_submit" class="btn btn-primary btn-block">
-                                    Posto
-                                </button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
 </div>
-
-<?php //                       <td> ' .  date('j F, Y ,h:i:s A', strtotime($lenda_row['date'])) . ' </td> ?>
-
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
-
-
-<script>
-    $(document).ready(function() {
-        $('#search_data').tokenfield();
-    });
-</script>
+</div>
 
 </body>
 

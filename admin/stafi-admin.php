@@ -105,25 +105,26 @@ $stafi_row = $stafi_result->fetch_assoc();
                 <div class="row">
 
                     <div class="col-md-8">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Foto</th>
-                                    <th scope="col">Emri</th>
-                                    <th scope="col">Lenda</th>
-                                    <th scope="col">Opsionet</th>
-                                </tr>
-                            </thead>
+                        <div class="r-table">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Foto</th>
+                                        <th scope="col">Emri</th>
+                                        <th scope="col">Lenda</th>
+                                        <th scope="col">Opsionet</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                <?php
-                                if ($stafi_result = mysqli_query($db, $stafi_sql)) {
-                                    $i = 1;
-                                    foreach ($stafi_result as $key => $stafi_row) {
+                                <tbody>
+                                    <?php
+                                    if ($stafi_result = mysqli_query($db, $stafi_sql)) {
+                                        $i = 1;
+                                        foreach ($stafi_result as $key => $stafi_row) {
 
-                                        //$c_row['id']
-                                        echo ' <tr>
+                                            //$c_row['id']
+                                            echo ' <tr>
                         <td> ' . $i++ . ' </td> 
                          <td> <img src="../assets/img/stafi/' . $stafi_row['stafiPhoto'] . '" class="table-img" alt="Foto" loading="lazy">  </td> 
                        
@@ -133,20 +134,20 @@ $stafi_row = $stafi_result->fetch_assoc();
                         <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_stafi_delete_' . $stafi_row["stafiID"] . ' ">Fshije</a> /
                         <a class="btn btn-primary"  data-toggle="modal" data-target="#modal_stafi_edit_' . $stafi_row["stafiID"] . ' ">Nrysho</a> </td>
                          </tr>  ';
-                                        get_op_modal(
-                                            "stafi_delete_",
-                                            $stafi_row['stafiID'],
-                                            "Fshirja e Stafit <b> " . $stafi_row['stafiEmri'] . " </b>",
-                                            "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini nga stafi<b><i>  " . $stafi_row['stafiEmri'] . " " . $stafi_row['stafiMbiemri'] . " </i></b>  ",
-                                            "Po Fshije"
+                                            get_op_modal(
+                                                "stafi_delete_",
+                                                $stafi_row['stafiID'],
+                                                "Fshirja e Stafit <b> " . $stafi_row['stafiEmri'] . " </b>",
+                                                "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini nga stafi<b><i>  " . $stafi_row['stafiEmri'] . " " . $stafi_row['stafiMbiemri'] . " </i></b>  ",
+                                                "Po Fshije"
 
-                                        );
+                                            );
 
-                                        get_op_modal(
-                                            "stafi_edit_",
-                                            $stafi_row['stafiID'],
-                                            "Ndrysho Stafin <b> " . $stafi_row['stafiEmri'] . " </b>",
-                                            '                          
+                                            get_op_modal(
+                                                "stafi_edit_",
+                                                $stafi_row['stafiID'],
+                                                "Ndrysho Stafin <b> " . $stafi_row['stafiEmri'] . " </b>",
+                                                '                          
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -176,17 +177,18 @@ $stafi_row = $stafi_result->fetch_assoc();
                                         </select>
                                     </div>
                         ',
-                                            "Ndrysho",
-                                            "primary"
+                                                "Ndrysho",
+                                                "primary"
 
-                                        );
+                                            );
+                                        }
                                     }
-                                }
 
-                                ?>
+                                    ?>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                     <div class="col-md-4">
@@ -209,11 +211,11 @@ $stafi_row = $stafi_result->fetch_assoc();
                                             //$c_row['id']
                                             echo ' <tr>
                         <td> ' . $i++ . ' </td> 
-                        <td> ' . $lenda_row['lendetEmri'] . ' </td>
-                        <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#category_delete_' . $lenda_row["lendetID"] . ' ">Fshije</a> </td>
+                        <td> ' . $lenda_row['lendetEmri'] . '</td>
+                        <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_lendet_delete_' . $lenda_row["lendetID"] . ' ">Fshije</a> </td>
                         </tr>  ';
                                             get_op_modal(
-                                                "category_delete_",
+                                                "lendet_delete_",
                                                 $lenda_row['lendetID'],
                                                 "Fshirja e Profesionit <b> " . $lenda_row['lendetEmri'] . " </b>",
                                                 "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini <b><i>  " . $lenda_row['lendetEmri'] . "</i></b>  ",
