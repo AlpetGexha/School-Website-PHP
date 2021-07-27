@@ -187,13 +187,14 @@ include "server.php";
             if ($result = mysqli_query($db, $sql)) {
                 foreach ($result as $get_kadegoirt_menu1 => $row) {
             ?>
+                    <!-- https://picsum.photos/200/150/?random -->
                     <div class="item">
                         <div class="card">
-                            <img class="card-img-top" src="https://picsum.photos/200/150/?random">
+                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto'];?>">
                             <div class="card-block">
-                                <h4 class="card-title"><?= $row['stafiEmri'] . $row['stafiMbiemri']  ?></h4>
+                                <h4 class="card-title"><?= $row['stafiEmri'] . $row['stafiMbiemri'];  ?></h4>
                                 <div class="card-text">
-                                    <?= $row['stafiEmri'] ?>
+                                    <?= $row['stafiEmri']; ?>
                                 </div>
                             </div>
                         </div>
