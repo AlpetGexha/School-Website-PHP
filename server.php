@@ -433,7 +433,19 @@ if (isset($_POST['lendet_delete_'])) {
     echo "<script>alert('Drejtimi u fshi me sukses!'); location.href='admin/stafi-admin';</script> ";
   }
 }
+//Aplikimet
+if (isset($_POST['aplikimi_delete_'])) {
+  $id = $_POST['aplikimi_delete_'];
 
+  $sql = "DELETE FROM aplikimet WHERE id = '$id'";
+  $result = mysqli_query($db, $sql);
+
+  if (!$result == TRUE) {
+    echo "<script>alert('Provoni përsëri'); location.href='admin/stafi-admin.php';</script> ";
+  } else {
+    echo "<script>alert('Aplikimi u fshi mse sukses!'); location.href='admin/aplikimet-admin.php';</script> ";
+  }
+}
 //****************Edit****************//
 if (isset($_POST['stafi_edit_'])) {
   $id = $_POST['stafi_edit_'];
