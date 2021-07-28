@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2021 at 05:00 AM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.4.12
+-- Generation Time: Jul 28, 2021 at 06:43 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `nexhmedinnixha`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aplikimet`
+--
+
+CREATE TABLE `aplikimet` (
+  `id` int(11) NOT NULL,
+  `emri` varchar(255) NOT NULL,
+  `mbiemri` varchar(255) NOT NULL,
+  `emriprindi` varchar(255) NOT NULL,
+  `ditelindja` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `telefoni` varchar(255) NOT NULL,
+  `drejtimet` varchar(255) NOT NULL,
+  `j_data` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `aplikimet`
+--
+
+INSERT INTO `aplikimet` (`id`, `emri`, `mbiemri`, `emriprindi`, `ditelindja`, `email`, `telefoni`, `drejtimet`, `j_data`) VALUES
+(20, 'Alpet Gexha', 'Gexha', 'Alpet', '2004-08-09', 'agexha@gmail.com', '123-123-123', 'Informatika', '2021-07-28 17:42:28'),
+(21, 'Alpet Gexha', 'Gexha', 'Alpet', '2004-08-09', 'agexha@gmail.com', '123-123-123', 'Informatika', '2021-07-28 17:42:28');
 
 -- --------------------------------------------------------
 
@@ -98,12 +124,7 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`id`, `userid`, `titulli`, `body`, `tags`, `photo`, `date`, `category`, `views`) VALUES
-(3, 1, 'Privacy ', 'Privacy is the ability of an individual or group to seclude themselves or information about themselves, and thereby express themselves selectively.\r\n\r\nWhen something is private to a person, it usually means that something is inherently special or sensitive to them. The domain of privacy partially overlaps with security, which can include the concepts of appropriate use and protection of information. Privacy may also take the form of bodily integrity. The right not to be subjected to unsanctioned invasions of privacy by the government, corporations, or individuals is part of many countries\' privacy laws, and in some cases, constitutions.\r\n\r\nIn the business world, a person may volunteer personal details, including for advertising, in order to receive some kinds of benefit. Public figures may be subject to rules on the public interest. Personal information which is voluntarily shared but subsequently stolen or misused can lead to identity theft.\r\n\r\nThe concept of universal individual privacy is a modern concept primarily associated with Western culture, British and North American in particular, and remained virtually unknown in some cultures until recent times. Most cultures, however, recognize the ability of individuals to withhold certain parts of their personal information from wider society, such as closing the door to one\'s home.', '', 'AlpetG Blog.60be642275d6e6.66775567.jpg', '2021-05-13 00:00:00', 3, 15),
-(4, 1, 'Iphone 12', 'orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '', 'AlpetG Blog.60be642275d6e6.66775567.jpg', '2021-05-13 00:00:00', 4, 59),
-(5, 1, 'IT', 'Information technology (IT) is the use of computers to store or retrieve data[1] and information. IT is typically used within the context of business operations as opposed to personal or entertainment technologies.[2] IT is considered to be a subset of information and communications technology (ICT). An information technology system (IT system) is generally an information system, a communications system, or, more specifically speaking, a computer system â€“ including all hardware, software, and peripheral equipment â€“ operated by a limited group of IT users.\r\n\r\nHumans have been storing, retrieving, manipulating, and communicating information since the Sumerians in Mesopotamia developed writing in about 3000 BC.[3] However, the term information technology in its modern sense first appeared in a 1958 article published in the Harvard Business Review; authors Harold J. Leavitt and Thomas L. Whisler commented that \"the new technology does not yet have a single established name. We shall call it information technology (IT).\" Their definition consists of three categories: techniques for processing, the application of statistical and mathematical methods to decision-making, and the simulation of higher-order thinking through computer programs.[4]', '', 'dubai.jpg', '2021-05-13 00:00:00', 5, 94),
-(60, 17, 'Computer', ' A computer is a machine that can be programmed to carry out sequences of arithmetic or logical operations automatically. Modern computers can perform generic sets of operations known as programs. These programs enable computers to perform a wide range of tasks. A computer system is a \"complete\" computer that includes the hardware, operating system (main software), and peripheral equipment needed and used for \"full\" operation. This term may also refer to a group of computers that are linked and function together, such as a computer network or computer cluster.\r\n\r\nA broad range of industrial and consumer products use computers as control systems. Simple special-purpose devices like microwave ovens and remote controls are included, as are factory devices like industrial robots and computer-aided design, as well as general-purpose devices like personal computers and mobile devices like smartphones. Computers power the Internet, which links hundreds of millions of other computers and users.\r\n\r\nEarly computers were only meant to be used for calculations. Simple manual instruments like the abacus have aided people in doing calculations since ancient times. Early in the Industrial Revolution, some mechanical devices were built to automate long tedious tasks, such as guiding patterns for looms. More sophisticated electrical machines did specialized analog calculations in the early 20th century. The first digital electronic calculating machines were developed during World War II. The first semiconductor transistors in the late 1940s were followed by the silicon-based MOSFET (MOS transistor) and monolithic integrated circuit (IC) chip technologies in the late 1950s, leading to the microprocessor and the microcomputer revolution in the 1970s. The speed, power and versatility of computers have been increasing dramatically ever since then, with transistor counts increasing at a rapid pace (as predicted by Moore\'s law), leading to the Digital Revolution during the late 20th to early 21st centuries.\r\n\r\nConventionally, a modern computer consists of at least one processing element, typically a central processing unit (CPU) in the form of a microprocessor, along with some type of computer memory, typically semiconductor memory chips. The processing element carries out arithmetic and logical operations, and a sequencing and control unit can change the order of operations in response to stored information. Peripheral devices include input devices (keyboards, mice, joystick, etc.), output devices (monitor screens, printers, etc.), and input/output devices that perform both functions (e.g., the 2000s-era touchscreen). Peripheral devices allow information to be retrieved from an external source and they enable the result of operations to be saved and retrieved.\r\nAccording to the Oxford English Dictionary, the first known use of the word \"computer\" was in 1613 in a book called The Yong Mans Gleanings by the English writer Richard Braithwait: \"I haue [sic] read the truest computer of Times, and the best Arithmetician that euer [sic] breathed, and he reduceth thy dayes into a short number.\" This usage of the term referred to a human computer, a person who carried out calculations or computations. The word continued with the same meaning until the middle of the 20th century. During the latter part of this period women were often hired as computers because they could be paid less than their male counterparts.[1] By 1943, most human computers were women.[2]\r\n\r\nThe Online Etymology Dictionary gives the first attested use of \"computer\" in the 1640s, meaning \"one who calculates\"; this is an \"agent noun from compute (v.)\". The Online Etymology Dictionary states that the use of the term to mean \"\'calculating machine\' (of ', '', 'AlpetG Blog.60be642275d6e6.66775567.jpg', '2021-06-05 13:01:58', 2, 182),
-(80, 17, 'Teste', 'Last text', '', 'AlpetG Blog.60be642275d6e6.66775567.jpg', '2021-06-07 20:23:30', 2, 61),
-(91, 1, 'Alpet', 'Alpet', '', 'NexhmedinNixha.60e8fddd446c10.03582778.jpg', '2021-07-10 03:54:37', 1, 0);
+(93, 1, 'Alpet', 'Alpet', '', 'NexhmedinNixha.61016b2ec79a14.24671002.png', '2021-07-28 16:35:26', 5, 3);
 
 -- --------------------------------------------------------
 
@@ -174,16 +195,7 @@ CREATE TABLE `stafi` (
 --
 
 INSERT INTO `stafi` (`stafiID`, `stafiPhoto`, `stafiEmri`, `stafiMbiemri`, `stafiLenda`) VALUES
-(4, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Testfdfds', 'Dasd', 3),
-(5, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2),
-(6, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2),
-(7, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2),
-(8, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2),
-(9, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2),
-(10, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2),
-(11, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2),
-(12, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2),
-(13, 'NexhmedinNixhaStaf.60f6412c2981f1.78525617.jpg', 'Test', 'Dasd', 2);
+(17, 'NNStaf.60ff43632c7b30.69143912.jpg', 'Alpet', 'Gexha', 3);
 
 -- --------------------------------------------------------
 
@@ -211,9 +223,48 @@ INSERT INTO `users` (`id`, `emri`, `mbiemri`, `username`, `password`, `email`, `
 (1, 'Alpet', 'Gexha', 'AlpetG', '$2y$10$kymJnHuonTJVKJDi5iLqDO12/q7TxatuMUYuRqkzMmPg6yvaGmHqC', 'agexha@gmail.com', 1, 'AlpetGBlogUser.60c38af32e7f04.43411620.jpg', '2021-06-05 01:53:35'),
 (17, 'Test', 'test', 'AlpetG2', '$2y$10$kymJnHuonTJVKJDi5iLqDO12/q7TxatuMUYuRqkzMmPg6yvaGmHqC', 'agexha10@gmail.com', 1, 'nologouser.jpg', '2021-06-05 01:13:22');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visitor_info`
+--
+
+CREATE TABLE `visitor_info` (
+  `id` int(11) NOT NULL,
+  `ip_address` varchar(255) DEFAULT NULL,
+  `user_agent` varchar(255) DEFAULT NULL,
+  `time_accessed` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `visitor_info`
+--
+
+INSERT INTO `visitor_info` (`id`, `ip_address`, `user_agent`, `time_accessed`) VALUES
+(170, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 14:35:34'),
+(171, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 14:35:35'),
+(172, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 14:44:39'),
+(173, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:21:52'),
+(174, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:21:54'),
+(175, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:23:33'),
+(176, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:23:41'),
+(177, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:23:44'),
+(178, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:23:44'),
+(179, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:23:44'),
+(180, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:25:00'),
+(181, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:26:21'),
+(182, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 15:31:47'),
+(183, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', '2021-07-28 16:16:06');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `aplikimet`
+--
+ALTER TABLE `aplikimet`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `kontakit`
@@ -238,7 +289,6 @@ ALTER TABLE `lendet`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category` (`category`),
   ADD KEY `userid` (`userid`);
 
 --
@@ -269,8 +319,20 @@ ALTER TABLE `users`
   ADD KEY `role` (`role`);
 
 --
+-- Indexes for table `visitor_info`
+--
+ALTER TABLE `visitor_info`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `aplikimet`
+--
+ALTER TABLE `aplikimet`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `kontakit`
@@ -294,7 +356,7 @@ ALTER TABLE `lendet`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `post_categories`
@@ -312,13 +374,19 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `stafi`
 --
 ALTER TABLE `stafi`
-  MODIFY `stafiID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `stafiID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
+-- AUTO_INCREMENT for table `visitor_info`
+--
+ALTER TABLE `visitor_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
 
 --
 -- Constraints for dumped tables
