@@ -2,7 +2,7 @@
 include "config.php";
 ?>
 <?php
-function get_header($tabName, $body = null)
+function get_header($tabName, $classbody = null)
 {
 ?>
   <!DOCTYPE html>
@@ -24,7 +24,7 @@ function get_header($tabName, $body = null)
 
   </head>
 
-  <body class="<?= $body ?>">
+  <body class="<?= $classbody ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -188,7 +188,7 @@ function get_AdminHeader($tilte_name)
     <link rel='shortcut icon' type='image/x-icon' href='../assets/img/logo.jpg'>
 
     <nav class="sb-topnav sticky-top navbar navbar-expand navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Paneli i Adminit</a>
+      <a class="navbar-brand" href="index.php">Paneli i Adminit</a>
       <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
       <!-- Navbar-->
     </nav>
@@ -206,24 +206,18 @@ function get_AdminHeader($tilte_name)
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
           <div class="sb-sidenav-menu">
             <div class="nav sticky-top">
+
+              <div class="sb-sidenav-menu-heading">Dashboard</div>
+              <a class="nav-link" href="index.php">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Dashboard
+              </a>
               <div class="sb-sidenav-menu-heading">Main</div>
 
-
-              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="false" aria-controls="collapsePages1">
-                <div class="sb-nav-link-icon"><i class="fas fa-tools"></i></div>
-                Profiles
-                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+              <a class="nav-link" href="../admin/aplikimet-admin.php">
+                <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
+                Aplikimet
               </a>
-              <div class="collapse" id="collapsePages1" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                  <a class="nav-link" href="../admin/profile.php">
-                    Profile
-                  </a>
-                  <a class="nav-link" href="">
-
-                  </a>
-                </nav>
-              </div>
 
               <a class="nav-link" href="../admin/user_admin.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
@@ -239,6 +233,7 @@ function get_AdminHeader($tilte_name)
                 <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
                 Mesazhet
               </a>
+
               <!-- <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
@@ -275,8 +270,6 @@ function get_AdminHeader($tilte_name)
           </div>
 
           <div class="sb-sidenav-footer">
-
-
             <div class="small">Admini: <?php echo $row_admin['username']; ?></div>
             <div class="row">
               <div class="col-md-7">
@@ -317,5 +310,210 @@ function get_AdminHeader($tilte_name)
       </script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
+    <?php
+  }
+
+  function get_dashbord()
+  {
+    require "config.php";
+    $username = $_SESSION['username'];
+    $sql = "SELECT * from users where username = '$username'";
+    $results11 = mysqli_query($db, $sql);
+    $row = $results11->fetch_assoc();
+
+    ?>
+      <div id="page-wrapper">
+        <div class="row">
+
+          <div class="col-lg-12">
+            <h1>Hello <?php echo "" . $row['username'] . "" ?>!</h1>
+            <div class="alert alert-success d-flex align-items-center" role="alert">
+              <strong><span class="fa fa-bullhorn fa-2x"></span> </strong>
+              <div>
+                <strong>&nbsp;&nbsp;Mir&euml;serdh&euml;t n&euml; panelin e Administratorit</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class="col-lg-3">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <i class="fa fa-rss fa-5x"></i>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="announcement-heading"> <?= get_count("post"); ?> </p>
+                    <p class="announcement-text"><strong>Postime</strong></p>
+                  </div>
+                </div>
+              </div>
+              <a href="post-admin.php">
+                <div class="panel-footer announcement-bottom">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Shiko
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <i class="fa fa-arrow-circle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-3">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <i class="fa fa-tags fa-5x"></i>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="announcement-heading"><?= get_count("post_categories"); ?></p>
+                    <p class="announcement-text"><strong>Kategori</strong></p>
+                  </div>
+                </div>
+              </div>
+              <a href="create-lami.php">
+                <div class="panel-footer announcement-bottom">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Shiko
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <i class="fa fa-arrow-circle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <i class="fa fa-trophy fa-5x"></i>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="announcement-heading">2</p>
+                    <p class="announcement-text"><strong>ED</strong></p>
+                  </div>
+                </div>
+              </div>
+              <a href="#">
+                <div class="panel-footer announcement-bottom">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Shiko
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <i class="fa fa-arrow-circle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <i class="fa fa-desktop fa-5x"></i>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="announcement-heading">1</p>
+                    <p class="announcement-text"><strong>Detajet e Webit!!</strong></p>
+                  </div>
+                </div>
+              </div>
+              <a href="stats.php">
+                <div class="panel-footer announcement-bottom">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Shiko
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <i class="fa fa-arrow-circle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-3">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <i class="fa fa-envelope fa-5x"></i>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="announcement-heading"> <?= get_count("aplikimet"); ?> </p>
+                    <p class="announcement-text"><strong>Aplikime</strong></p>
+                  </div>
+                </div>
+              </div>
+              <a href="post-admin.php">
+                <div class="panel-footer announcement-bottom">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Shiko
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <i class="fa fa-arrow-circle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-3">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <i class="fa fa-envelope fa-5x"></i>
+                  </div>
+                  <div class="col-xs-6 text-right">
+                    <p class="announcement-heading"><?= get_count("kontakit"); ?></p>
+                    <p class="announcement-text"><strong>Kategori</strong></p>
+                  </div>
+                </div>
+              </div>
+              <a href="create-lami.php">
+                <div class="panel-footer announcement-bottom">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Shiko
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      <i class="fa fa-arrow-circle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
     <?php
   }
