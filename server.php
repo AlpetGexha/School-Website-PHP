@@ -51,17 +51,17 @@ if (isset($_POST['register_submit'])) {
 
 //****************Login****************//
 if (isset($_POST['login_submit'])) {
-  $username = mysqli_real_escape_string($db, $_POST['username']);
-  $password = mysqli_real_escape_string($db, $_POST['password']);
+  $login_username = mysqli_real_escape_string($db, $_POST['username']);
+  $password_username = mysqli_real_escape_string($db, $_POST['password']);
 
-  $sql = "SELECT * from users where username = '$username'";
+  $sql = "SELECT * from users where username = '$login_username'";
   $results = mysqli_query($db, $sql);
   $row = $results->fetch_assoc();
 
   if (mysqli_num_rows($results) != 1) { //Nese perdoruesi nuk ekziton
     $msg = "Ky p&euml;rdorues nuk ekziston ";  //errori per username
-  } else if (password_verify($password, $row['password'])) { //Nese passwordi edhe gabim  dhe passwordi per encyptim
-    $_SESSION['username'] = $username; //Username
+  } else if (password_verify($password_username, $row['password'])) { //Nese passwordi edhe gabim  dhe passwordi per encyptim
+    $_SESSION['username'] = $login_username; //Username
     $_SESSION['loggedIn'] = true; //Nese passwordi edhe ne rregull
     header('Location:admin/index.php'); //Shko në faqe kryesore
   } else {
@@ -89,13 +89,12 @@ if (isset($_POST['apliko_submit'])) {
   mysqli_query($db, $insert);
 
   if ($insert) {
-    //$msg = "U kry bac nes hajde en shkoll";
-    $msg = " <br> <b> $emri  $mbiemri</b> p&euml;r drejtimin e <b>$drejtimet-s</b> <br> Do ju kontaktojm s&euml; shpejti n&euml;: <br> Telefon: <b>$telefoni</b> apo n&euml; <br>  Email: <b>$email</b> <br><br> Sh&euml;ndet! ";
+    echo "<script>alert(' $emri  $mbiemri për drejtimin e $drejtimet-s Do ju kontaktojm së shpejti në: Telefon: $telefoni apo në;   Email: $email Shëndet!'); location.href='apliko_online.php';</script> ";
   }
   //hape nje file me emrin aplikimet.txt , "a+" Read/Write
-  $file = fopen("aplikimet.txt", "a+");
-  $teksti =  $emri . "\n" . $mbiemri . "\n" . $emri_p . "\n" . $ditelindja . "\n" . $email . "\n" . $telefoni . "\n" . $drejtimet .  "\n*********************************************************************\n";
-  fwrite($file, $teksti);
+  // $file = fopen("aplikimet.txt", "a+");
+  // $teksti =  $emri . "\n" . $mbiemri . "\n" . $emri_p . "\n" . $ditelindja . "\n" . $email . "\n" . $telefoni . "\n" . $drejtimet .  "\n*********************************************************************\n";
+  // fwrite($file, $teksti);
 }
 
 
@@ -117,46 +116,8 @@ if (isset($_POST['contact_submit'])) {
   //hape nje file me emrin contact.txt , "a+" Read/Write
   $file = fopen("contact.txt", "a+");
 
-  $teksti = $emri . "\n " . $mbiemri . "\n" . $email . "\n " . $telefoni . "\n" . $mesazhi . "\n*********************************************************************\n";
   mysqli_query($db, $insert);
-
-  fwrite($file, $teksti);
 }
-
-
-
-
-//kategorit per navbar
-function get_kadegoirt_menu($table)
-{
-  require("config.php");
-  $sql = "SELECT * FROM $table ";
-  if ($result = mysqli_query($db, $sql)) {
-
-    foreach ($result as $get_kadegoirt_menu1 => $kategori_memu) {
-      echo '<a class="dropdown-item" href="kategoria.php?id=' . $kategori_memu['id'] . '">' . $kategori_memu['emri'] . '</a>
-		';
-    }
-  }
-
-  mysqli_close($db);
-}
-
-//kategorit per navbar
-function get_kat_link($table)
-{
-  require("config.php");
-  $sql = "SELECT * from post_categories where lamia='$table'";
-  if ($result = mysqli_query($db, $sql)) {
-
-    foreach ($result  as $row) {
-      echo  ' <a href="kategoria.php?id=' . $row['id'] . '">  <li> ' . $row['emri'] . ' </li>  </a>';
-    }
-  }
-
-  mysqli_close($db);
-}
-
 
 
 //****************Krijimi i postimeve****************//
@@ -196,7 +157,7 @@ if (isset($_POST['create_post_submit'])) {
         $insert = "INSERT INTO post (userid,titulli,body,category,photo)VALUES('$user_id','$p_titulli','$p_pershkrimi','$p_kategorit','$fileNameNew')";
         mysqli_query($db, $insert);
         if ($insert) {
-           echo "<script>alert('Postimi u postua me sukses'); location.href='create-post.php';</script> ";
+          echo "<script>alert('Postimi u postua me sukses'); location.href='create-post.php';</script> ";
         } else {
           $msg = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
         }
@@ -226,7 +187,6 @@ if (isset($_POST['add_lamia'])) {
     mysqli_query($db, $insert);
 
     echo "<script>alert('Lamia u shtua me sukses'); location.href='create-lami.php';</script> ";
-
   }
 }
 
@@ -265,7 +225,6 @@ if (isset($_POST['add_drejtime'])) {
         header("Location:create-lami.php");
         if ($insert) {
           echo "<script>alert('Drejtimi u shtua me sukses'); location.href='crate-lami.php';</script> ";
-
         } else {
           $msg = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
         }
@@ -278,6 +237,36 @@ if (isset($_POST['add_drejtime'])) {
   }
 }
 
+//****************kategorit per navbar ****************//
+function get_kat_link($table)
+{
+  require("config.php");
+  $sql = "SELECT * from post_categories where lamia='$table'";
+  if ($result = mysqli_query($db, $sql)) {
+
+    foreach ($result  as $row) {
+      echo  ' <a href="kategoria.php?id=' . $row['id'] . '">  <li> ' . $row['emri'] . ' </li>  </a>';
+    }
+  }
+
+  mysqli_close($db);
+}
+
+function get_kadegoirt_menu($table)
+{
+  require("config.php");
+  $sql = "SELECT * FROM $table ";
+  if ($result = mysqli_query($db, $sql)) {
+    foreach ($result as $kategori_memu) {
+      echo '
+      <a class="dropdown-item" href="kategoria.php?id=' . $kategori_memu['id'] . '">' . $kategori_memu['emri'] . '</a>
+	      	';
+    }
+  }
+
+  mysqli_close($db);
+}
+
 
 //****************Krijimi i lendeve****************//
 if (isset($_POST['add_lenda'])) {
@@ -288,7 +277,6 @@ if (isset($_POST['add_lenda'])) {
   mysqli_query($db, $insert);
 
   echo "<script>alert('Stafi u ndryshua me sukses'); location.href='stafi-admin.php';</script> ";
-
 }
 
 
@@ -324,7 +312,6 @@ if (isset($_POST['create_staf'])) {
         mysqli_query($db, $insert);
         if ($insert) {
           echo "<script>alert('Stafi u krijua me sukses'); location.href='stafi-admin.php';</script> ";
-
         } else {
           $msg = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
         }
