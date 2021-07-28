@@ -9,7 +9,6 @@ include "server.php";
     }
 </style>
 
-
 <div class="foto-kryesore">
     <img src="assets/img/foto-ballina.jpg" style="width: 100%;" alt="Foto Kryesore">
     <div class="foto-kryesore-text">
@@ -109,69 +108,11 @@ include "server.php";
     <div class="drejtimet">
         <div class="container">
             <div class="row">
-
                 <h1 class="drejtimi-h1">Drejtimet</h1>
-                <div class="col">
-
-                    <div class="drejtimi-heading">
-                        <h2>Makineri</h2>
-                        <ul>
-                            <?php get_kat_link("1"); ?>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col">
-
-                    <div class="drejtimi-heading">
-                        <h2>Trafik rrugor</h2>
-                        <ul>
-                            <?php get_kat_link("2"); ?>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <div class="col">
-                    <div class="drejtimi-heading">
-                        <h2>Elektroteknika</h2>
-                        <ul>
-                            <?php get_kat_link("3"); ?>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <div class="col">
-
-                    <div class="drejtimi-heading">
-                        <h2>Nd&euml;rtimtari</h2>
-                        <ul>
-                            <?php get_kat_link("4"); ?>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <div class="col">
-                    <div class="drejtimi-heading">
-                        <h2>Tekstil</h2>
-                        <ul>
-                            <?php get_kat_link("5"); ?>
-                        </ul>
-                    </div>
-                </div>
-
-
-                <div class="col">
-                    <div class="drejtimi-heading">
-                        <h2>Art pamor</h2>
-                        <ul>
-                            <?php get_kat_link("6"); ?>
-                        </ul>
-                    </div>
-
-                </div>
+                <?php
+                $x = new ViewDrejtimet();
+                $x->showDrejtimet();
+                ?>
             </div>
         </div>
     </div>
@@ -190,11 +131,11 @@ include "server.php";
                     <!-- https://picsum.photos/200/150/?random -->
                     <div class="item">
                         <div class="card">
-                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto'];?>">
+                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto']; ?>">
                             <div class="card-block">
-                                <h4 class="card-title"><?= $row['stafiEmri'] . $row['stafiMbiemri'];  ?></h4>
-                                <div class="card-text">
-                                    <?= $row['stafiEmri']; ?>
+                                <h4 class="card-title"><b><?= $row['stafiEmri'] . " " . $row['stafiMbiemri'];  ?></b></h4>
+                                <div class="card-text mb-2">
+                                    <i><?= $row['stafiEmri']; ?></i>
                                 </div>
                             </div>
                         </div>
