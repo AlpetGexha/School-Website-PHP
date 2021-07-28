@@ -471,6 +471,28 @@ if (isset($_POST['post_edit_'])) {
     echo "<script>alert('Postimi u ndryshua me sukses'); location.href='admin/post-admin.php';</script> ";
   } else {
     echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/post-admin.php';</script> ";
+  }
+}
+
+
+
+//****************  Count ****************//
+function get_count($tablename)
+{
+  require("config.php");
+
+  $sql = "SELECT * FROM $tablename";
+  if ($result = mysqli_query($db, $sql)) {
+
+    $rowcount = mysqli_num_rows($result);
+    printf("%d", $rowcount);
+
+    mysqli_free_result($result);
+  }
+
+  mysqli_close($db);
+}
+
 //**************** Vizitor Info ****************//
 function updateInfo()
 {
