@@ -3,7 +3,7 @@ include "config.php";
 include "server.php";
 $id = $_REQUEST['id'];
 
-
+mysqli_query($db, "UPDATE post set views = views +1  WHERE id ='$id' ");
 
 $sql = "SELECT p.id,p.photo,p.date,p.views,p.titulli,p.body,p.category ,u.username , p.userid FROM users u, post p WHERE p.userid = u.id  and p.id = '$id' ORDER BY id DESC ";
 $result = mysqli_query($db, $sql);
@@ -16,6 +16,11 @@ $c_row = $c_result->fetch_assoc();
 
 ?>
 <?php get_header($c_row['emri']); ?>
+
+<?php 
+require_once 'admin/conn.php';
+updateInfo();
+?>
 
 <div class="banner">
     <h1><?= $c_row['emri'] ?></h1>
@@ -33,11 +38,10 @@ $c_row = $c_result->fetch_assoc();
         <div class='col-lg-8'>
             <div class="d-flex justify-content-center flex-wrap">
 
-
                 <div class='g-0 bg-light  container-layout'>
                     <h1 class='mt-0'><?= $row['titulli']; ?></h1>
                     <p> U postua me: <?= strftime('%e %B, %Y', strtotime($row['date'])); ?></p>
-                    <div class='col-md-6 mb-md-0 p-md-4'>
+                    <div class='col-md-12 mb-md-0 p-md-4'>
                         <img src='assets/img/drejtimet_post/<?= $row['photo']; ?>' class='w-100' alt='foto'>
                     </div>
                     <div class='col-md-12 p-4 '>

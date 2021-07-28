@@ -471,6 +471,13 @@ if (isset($_POST['post_edit_'])) {
     echo "<script>alert('Postimi u ndryshua me sukses'); location.href='admin/post-admin.php';</script> ";
   } else {
     echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/post-admin.php';</script> ";
+//**************** Vizitor Info ****************//
+function updateInfo()
+{
+  $sql = "INSERT INTO " . $GLOBALS['info_table_name'] . " (ip_address, user_agent) VALUES(:ip_address, :user_agent)";
+  $query = $GLOBALS['db']->prepare($sql);
+  $query->execute([':ip_address' => $_SERVER["REMOTE_ADDR"], ':user_agent' => $_SERVER["HTTP_USER_AGENT"]]);
+}
 
 //**************** Shfaqja e rejtimeve ****************//
 //batabasa
