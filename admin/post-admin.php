@@ -4,11 +4,7 @@ include "../server.php";
 $msg = "";
 ob_start();
 
-if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
-    header("Location:../login.php");
-
-    die();
-}
+IamAdmin();
 
 
 $c_sql = "SELECT * from post_categories ";

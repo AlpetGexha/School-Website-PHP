@@ -7,6 +7,13 @@ ob_start();
 setlocale(LC_TIME, array('da_DA.UTF-8', 'da_DA@euro', 'da_DA', 'Albanian'));
 include "server-style.php";
 
+function IamAdmin()
+{
+  if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
+    header("Location:../login.php");
+    die();
+  }
+}
 
 //****************Regjistrimi ****************//
 if (isset($_POST['register_submit'])) {

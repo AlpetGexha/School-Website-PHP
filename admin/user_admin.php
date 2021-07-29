@@ -2,7 +2,7 @@
 $msg = "";
 include "../server.php";
 include "../config.php";
-
+IamAdmin();
 ?>
 
 <?php get_AdminHeader("Kategory Admin"); ?>

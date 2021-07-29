@@ -4,11 +4,7 @@ include "../server.php";
 $msg = "";
 ob_start();
 
-if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
-    header("Location:../login.php");
-
-    die();
-}
+IamAdmin();
 
 $lenda_sql = "SELECT * from lendet";
 $lenda_result = mysqli_query($db, $lenda_sql);

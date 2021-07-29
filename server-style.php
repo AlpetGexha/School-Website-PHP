@@ -494,7 +494,7 @@ function get_AdminHeader($tilte_name)
                   </div>
                   <div class="col-xs-6 text-right">
                     <p class="announcement-heading"><?= get_count("kontakit"); ?></p>
-                    <p class="announcement-text"><strong>Kategori</strong></p>
+                    <p class="announcement-text"><strong>Mesazhe</strong></p>
                   </div>
                 </div>
               </div>

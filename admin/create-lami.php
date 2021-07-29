@@ -2,7 +2,7 @@
 $msg = "";
 include "../server.php";
 include "../config.php";
-
+IamAdmin();
 
 $c_sql = "SELECT p.id, p.lamia, p.emri, p.emriPhoto, l.idLamia , l.lamiaid from post_categories p, lamia l where p.lamia = l.idLamia  order by p.id";
 $c_result = mysqli_query($db, $c_sql);
