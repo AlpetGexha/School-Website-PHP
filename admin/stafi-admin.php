@@ -11,9 +11,9 @@ $lenda_result = mysqli_query($db, $lenda_sql);
 $lenda_row = $lenda_result->fetch_assoc();
 
 
-$stafi_sql = "SELECT s.stafiID , s.stafiPhoto, s.stafiEmri, s.stafiMbiemri, s.stafiLenda, l.lendetEmri from stafi s, lendet l WHERE s.stafiLenda = l.lendetID  ";
-$stafi_result = mysqli_query($db, $stafi_sql);
-$stafi_row = $stafi_result->fetch_assoc();
+$x = new Pagination();
+$sql = "SELECT s.stafiID , s.stafiPhoto, s.stafiEmri, s.stafiMbiemri, s.stafiLenda, l.lendetEmri from stafi s, lendet l WHERE s.stafiLenda = l.lendetID ";
+$x->InsertData("post", "$sql",10)
 
 
 ?>
@@ -115,9 +115,8 @@ $stafi_row = $stafi_result->fetch_assoc();
 
                                 <tbody>
                                     <?php
-                                    if ($stafi_result = mysqli_query($db, $stafi_sql)) {
-                                        $i = 1;
-                                        foreach ($stafi_result as $key => $stafi_row) {
+                           
+                                        foreach ($x->result as $key => $stafi_row) {
 
                                             //$c_row['id']
                                             echo ' <tr>
@@ -178,14 +177,14 @@ $stafi_row = $stafi_result->fetch_assoc();
 
                                             );
                                         }
-                                    }
+                                    
 
                                     ?>
 
                                 </tbody>
                             </table>
                         </div>
-
+                        <?php $x->getNavPages();  ?>
                     </div>
                     <div class="col-md-4">
                         <div class="r-table">

@@ -122,7 +122,7 @@ $ca_row = $c_result->fetch_assoc();
                                     if ($ca_result = mysqli_query($db, $ca_sql)) {
                                         $i = 1;
                                         foreach ($ca_result as $key => $ca_row) {
-                             echo ' <tr>
+                                            echo ' <tr>
                                     <td> ' . $i++ . ' </td> 
                                     <td> ' . $ca_row['lamiaid'] . ' </td>
                                     <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_category_delete_' . $ca_row["idLamia"] . ' ">Fshije</a> </td>

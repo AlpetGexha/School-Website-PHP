@@ -3,6 +3,14 @@ $msg = "";
 include "../server.php";
 include "../config.php";
 IamAdmin();
+
+$x = new Pagination();
+$sql = "SELECT * from kontakit ";
+$x->InsertData("kontakit", "$sql");
+// $y = new Pagination();
+// $ysql = "SELECT * from kontakit ";
+// $y->InsertData("kontakit", "$ysql");
+
 ?>
 
 <?php get_AdminHeader("Kategory Admin"); ?>
@@ -55,6 +63,7 @@ IamAdmin();
         </tbody>
       </table>
     </div>
+    <?php $x->getNavPages();  ?>
   </div>
 
 </div>

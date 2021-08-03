@@ -507,62 +507,51 @@ function updateInfo()
   $query->execute([':ip_address' => $_SERVER["REMOTE_ADDR"], ':user_agent' => $_SERVER["HTTP_USER_AGENT"]]);
 }
 
-//**************** Shfaqja e rejtimeve ****************//
-//batabasa
-class DB
+//**************** Pagination ****************//
+require_once "admin/pdo.php";
+class Pagination extends DB 
 {
-  private $servername, $username, $password, $database;
-
-  protected function connection()
+  public $total_pages, $page, $result;
+  public function InsertData($table_id, $SELECT, $pageNumber = 20)
   {
-    $this->servername = "localhost";
-    $this->username = "root";
-    $this->password = "";
-    $this->database = "nexhmedinnixha";
+    $perPage = $pageNumber;
 
-    $db = new mysqli($this->servername, $this->username, $this->password, $this->database);
-    return $db;
+    // Calculate Total pages
+    $stmt = $this->openDB()->query('SELECT count(*) FROM ' . $table_id .' ');
+    $total_results = $stmt->fetchColumn();
+    $this->total_pages = ceil($total_results / $perPage);
+
+    // Current page
+    $this->page = isset($_GET['faqja']) ? $_GET['faqja'] : 1;
+    $starting_limit = ($this->page - 1) * $perPage;
+
+    // Query to fetch users
+    $query = "".$SELECT." LIMIT $starting_limit,$perPage";
+
+    // Fetch all users for current page
+    $this->result = $this->openDB()->query($query)->fetchAll();
   }
-}
 
-class Drejtimet extends DB
-{
-
-  protected function getDrejtimet()
-  {
-    $sql = "SELECT * FROM lamia";
-    $result = $this->connection()->query($sql);
-    $NumRow = $result->num_rows;
-
-    if ($NumRow > 0) {
-      while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-      }
-      return $data;
-    }
-  }
-}
-
-class ViewDrejtimet extends Drejtimet
-{
-
-  public function showDrejtimet()
-  {
-    $datas = $this->getDrejtimet();
-
-    foreach ($datas as $data) {
-      echo '
-        <div class="col">
-            <div class="drejtimi-heading">
-                <h2>' . $data['lamiaid'] . '</h2>
-                <ul>';
-      echo get_kat_link($data['idLamia']);
-      echo '          
-                </ul>
+  public function getNavPages(){?>
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4">
+                    <p>Faqja <?= $this->page ?> nga <?= $this->total_pages ?></p>
+                </div>
+                <div class="col-xl-8 d-flex flex-row-reverse bd-highlight">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <?php for ($this->page = 1; $this->page <= $this->total_pages; $this->page++) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href=' <?= "?faqja=$this->page"; ?>'> <?= $this->page; ?></a>
+                                </li>
+                            <?php endfor; ?>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
-        
-      ';
-    }
+        <?php
   }
 }
