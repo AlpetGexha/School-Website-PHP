@@ -110,6 +110,66 @@ include "server.php";
             <div class="row">
                 <h1 class="drejtimi-h1">Drejtimet</h1>
                 <?php
+
+                //**************** Shfaqja e rejtimeve ****************//
+                //batabasa
+                class DBa
+                {
+                    private $servername, $username, $password, $database;
+
+                    protected function connection()
+                    {
+                        $this->servername = "localhost";
+                        $this->username = "root";
+                        $this->password = "";
+                        $this->database = "nexhmedinnixha";
+
+                        $db = new mysqli($this->servername, $this->username, $this->password, $this->database);
+                        return $db;
+                    }
+                }
+
+                class Drejtimet extends DBa
+                {
+
+                    protected function getDrejtimet()
+                    {
+                        $sql = "SELECT * FROM lamia";
+                        $result = $this->connection()->query($sql);
+                        $NumRow = $result->num_rows;
+
+                        if ($NumRow > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $data[] = $row;
+                            }
+                            return $data;
+                        }
+                    }
+                }
+
+                class ViewDrejtimet extends Drejtimet
+                {
+
+                    public function showDrejtimet()
+                    {
+                        $datas = $this->getDrejtimet();
+
+                        foreach ($datas as $data) {
+                            echo '
+        <div class="col">
+            <div class="drejtimi-heading">
+                <h2>' . $data['lamiaid'] . '</h2>
+                <ul>';
+                            echo get_kat_link($data['idLamia']);
+                            echo '          
+                </ul>
+            </div>
+        </div>
+        
+      ';
+                        }
+                    }
+                }
                 $x = new ViewDrejtimet();
                 $x->showDrejtimet();
                 ?>
