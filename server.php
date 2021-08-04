@@ -509,49 +509,76 @@ function updateInfo()
 
 //**************** Pagination ****************//
 require_once "admin/pdo.php";
-class Pagination extends DB 
+class Pagination extends DB
 {
   public $total_pages, $page, $result;
-  public function InsertData($table_id, $SELECT, $pageNumber = 20)
+  public function InsertData($table_id, $SELECT, $pageNumber = 25)
   {
     $perPage = $pageNumber;
 
+
     // Calculate Total pages
-    $stmt = $this->openDB()->query('SELECT count(*) FROM ' . $table_id .' ');
+    $stmt = $this->openDB()->query('SELECT count(*) FROM ' . $table_id . ' ');
     $total_results = $stmt->fetchColumn();
     $this->total_pages = ceil($total_results / $perPage);
 
     // Current page
     $this->page = isset($_GET['faqja']) ? $_GET['faqja'] : 1;
     $starting_limit = ($this->page - 1) * $perPage;
+    $this->previous_page = $this->page - 1;
+    $this->next_page = $this->page + 1;
 
     // Query to fetch users
-    $query = "".$SELECT." LIMIT $starting_limit,$perPage";
+    $query = "" . $SELECT . " LIMIT $starting_limit,$perPage";
 
     // Fetch all users for current page
     $this->result = $this->openDB()->query($query)->fetchAll();
   }
 
-  public function getNavPages(){?>
-        <hr>
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4">
-                    <p>Faqja <?= $this->page ?> nga <?= $this->total_pages ?></p>
-                </div>
-                <div class="col-xl-8 d-flex flex-row-reverse bd-highlight">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <?php for ($this->page = 1; $this->page <= $this->total_pages; $this->page++) : ?>
-                                <li class="page-item">
-                                    <a class="page-link" href=' <?= "?faqja=$this->page"; ?>'> <?= $this->page; ?></a>
-                                </li>
-                            <?php endfor; ?>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+  public function getNavPages()
+  { ?>
+    <hr>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-4">
+          <li <p>Faqja <?= $this->page ?> nga <?= $this->total_pages ?></p>
         </div>
-        <?php
+        <div class="col-xl-8 d-flex flex-row-reverse bd-highlight">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item <?php if ($this->page <= 1) {
+                                      echo 'disabled';
+                                    } ?>">
+                <a class="page-link" <?php if ($this->page > 1) {
+                                        echo "class='page-link' href='?faqja=" . $this->previous_page . "'";
+                                      } ?>>Prapa</a>
+              </li>
+              <?php for ($i = 1; $i <= $this->total_pages; $i++) :
+                if ($i == $this->page) {
+                  echo '                
+               <li class="page-item active">
+                  <a class="page-link " href="?faqja=' . $i . '"> ' . $i . '</a>
+                </li>';
+                } else {
+                  echo '                
+               <li class="page-item">
+                  <a class="page-link " href="?faqja=' . $i . '"> ' . $i . '</a>
+                </li>';
+                }
+              ?>
+              <?php endfor; ?>
+              <li class="page-item <?php if (($this->page + 1) >= $this->total_pages) {
+                                      echo ' disabled';
+                                    } ?>">
+                <a class="page-link" <?php if (($this->page + 1) < $this->total_pages) {
+                                        echo "href='?faqja=" . $this->next_page . "'";
+                                      } ?>>Tjetra</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+<?php
   }
 }
