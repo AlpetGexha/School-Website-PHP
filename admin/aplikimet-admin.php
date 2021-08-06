@@ -7,7 +7,7 @@ ob_start();
 IamAdmin();
 $x = new Pagination();
 $sql = "SELECT * from aplikimet ORDER BY id DESC";
-$x->InsertData("aplikimet", "$sql")
+$x->InsertData("aplikimet", "$sql", 2);
 
 ?>
 

@@ -4,9 +4,11 @@ include "../server.php";
 include "../config.php";
 IamAdmin();
 
+
+
 $x = new Pagination();
 $sql = "SELECT u.id, u.emri, u.mbiemri, u.username,u.email,u.j_data, r.role from users u, roles r WHERE u.role = r.id order by u.id DESC ";
-$x->InsertData("users", "$sql")
+$x->InsertData("users", "$sql");
 
 ?>
 
@@ -29,6 +31,7 @@ $x->InsertData("users", "$sql")
         ?>
 
         <h3 class="title">P&euml;rdoruesit</h3>
+
         <div class="r-table">
             <table class=" table table-striped table-hover">
                 <thead>

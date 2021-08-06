@@ -49,7 +49,7 @@ function get_header($tabName, $classbody = null)
               <a class="nav-link" href="index.php">Faqja Kryesore</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" href="#Stafi">
+              <a class="nav-link" href="index.php#Stafi">
                 Stafi
               </a>
             </li>
