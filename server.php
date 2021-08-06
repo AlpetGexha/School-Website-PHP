@@ -479,6 +479,24 @@ if (isset($_POST['post_edit_'])) {
     echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/post-admin.php';</script> ";
   }
 }
+//category
+if (isset($_POST['category_edit_'])) {
+
+  $id = $_POST['category_edit_'];
+  $titulli = mysqli_real_escape_string($db, $_POST['edit_category_name']);
+  $body = mysqli_real_escape_string($db, $_POST['edit_category_text']);
+
+
+  //updati nga edit.php 
+  $post_update = "UPDATE post_categories set emri = '$titulli', colum_table	 = '$body' where id=$id";
+  mysqli_query($db, $post_update);
+
+  if ($post_update) {
+    echo "<script>alert('Drejtimi u ndryshua me sukses'); location.href='admin/create-lami.php';</script> ";
+  } else {
+    echo "<script>alert('Drejtimi p&euml;rs&euml;ri'); location.href='admin/create-lami.php';</script> ";
+  }
+}
 
 
 
@@ -511,7 +529,7 @@ function updateInfo()
 require_once "admin/pdo.php";
 class Pagination extends DB
 {
-  public $total_pages, $page, $result;
+
   public function InsertData($table_id, $SELECT, $pageNumber = 25)
   {
     $perPage = $pageNumber;
@@ -522,7 +540,7 @@ class Pagination extends DB
     $total_results = $stmt->fetchColumn();
     $this->total_pages = ceil($total_results / $perPage);
 
-    // Current page
+    // Current pages
     $this->page = isset($_GET['faqja']) ? $_GET['faqja'] : 1;
     $starting_limit = ($this->page - 1) * $perPage;
     $this->previous_page = $this->page - 1;
