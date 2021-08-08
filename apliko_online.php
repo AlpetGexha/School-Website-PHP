@@ -14,8 +14,9 @@ include 'server.php';
         position: relative;
         width: 150px;
         height: 20px;
-        color: white;
+        color: #fff;
     }
+
 
     #ditelinjda:before {
         position: absolute;
@@ -24,6 +25,12 @@ include 'server.php';
         content: attr(data-date);
         display: inline-block;
         color: black;
+    }
+
+    .dark-mode #ditelinjda:before {
+        color: #fff;
+        background-color: #171717;
+        border-color: #404040;
     }
 
     input::-webkit-datetime-edit,
@@ -38,6 +45,7 @@ include 'server.php';
         right: 0;
         color: black;
         opacity: 1;
+
     }
 </style>
 
@@ -105,16 +113,16 @@ include 'server.php';
                                 <label for="disabledTextInput" class="form-label">Drejtimi</label>
                                 <select name="drejtimet" class="custom-select mb-3">
                                     <option selected disabled required=""> Çfar&euml; drejtimi jeni t&euml; interesuar</option>
-                                
+
                                     <?php
                                     $sql = "SELECT l.idLamia, l.lamiaid, p.id, p.lamia, p.emri FROM lamia l, post_categories p WHERE p.lamia = l.idLamia";
-                                    $result = mysqli_query($db,$sql);
+                                    $result = mysqli_query($db, $sql);
                                     $row = $result->fetch_assoc();
-                                    
+
                                     foreach ($result as $row) {
-                                        ?>
-                                        <option value="<?= $row['emri']; ?>"><?= $row['lamiaid']. " - " . $row['emri']?> </option>
-                                        <?php
+                                    ?>
+                                        <option value="<?= $row['emri']; ?>"><?= $row['lamiaid'] . " - " . $row['emri'] ?> </option>
+                                    <?php
                                     }
                                     ?>
                                 </select>
@@ -141,5 +149,5 @@ include 'server.php';
             $("#phone").mask("999-999-999");
         });
     </script>
-</div>
-<?php get_footer(); ?>s
+</div> <br>
+<?php get_footer(); ?>
