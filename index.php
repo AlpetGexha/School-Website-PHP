@@ -184,18 +184,18 @@ include "server.php";
 
         <div class="owl-carousel owl-theme">
             <?php
-            $sql = "SELECT * FROM stafi ";
+            $sql = "SELECT s.stafiPhoto, s.stafiEmri, s.stafiMbiemri, s.stafiLenda, l.lendetID,  l.lendetEmri  FROM stafi s, lendet l where s.stafiLenda = l.lendetID  ";
             if ($result = mysqli_query($db, $sql)) {
                 foreach ($result as $get_kadegoirt_menu1 => $row) {
             ?>
                     <!-- https://picsum.photos/200/150/?random -->
-                    <div class="item">
+                    <div class="stafi_card">
                         <div class="card">
-                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto']; ?>">
+                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto']; ?> ">
                             <div class="card-block">
                                 <h4 class="card-title"><b><?= $row['stafiEmri'] . " " . $row['stafiMbiemri'];  ?></b></h4>
                                 <div class="card-text mb-2">
-                                    <i><?= $row['stafiEmri']; ?></i>
+                                    <i><?= $row['lendetEmri']; ?></i>
                                 </div>
                             </div>
                         </div>

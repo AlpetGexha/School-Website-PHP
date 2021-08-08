@@ -13,7 +13,7 @@ $lenda_row = $lenda_result->fetch_assoc();
 
 $x = new Pagination();
 $sql = "SELECT s.stafiID , s.stafiPhoto, s.stafiEmri, s.stafiMbiemri, s.stafiLenda, l.lendetEmri from stafi s, lendet l WHERE s.stafiLenda = l.lendetID ";
-$x->InsertData("post", "$sql",10)
+$x->InsertData("post", "$sql", 10)
 
 
 ?>
@@ -37,10 +37,10 @@ $x->InsertData("post", "$sql",10)
             <div class="card-wrapper">
                 <div class="card fat">
                     <div class="card-body">
-                        <h4 class="card-title">L&euml;nd&euml;</h4>
+                        <h4 class="card-title">Provesionet</h4>
                         <form method="POST" action="#">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Shto L&euml;nd&euml;" name="lenda_add" required="" autofocus="" aria-describedby="button-addon2" oninvalid="this.setCustomValidity('Shkruani L&euml;');" oninput="this.setCustomValidity('');">
+                                <input type="text" class="form-control" placeholder="Shto Provesione" name="lenda_add" required="" autofocus="" aria-describedby="button-addon2" oninvalid="this.setCustomValidity('Shkruani L&euml;');" oninput="this.setCustomValidity('');">
                                 <button class="btn btn-outline-primary" type="submit" name="add_lenda" id="button-addon2">Shto</button>
                             </div>
                         </form>
@@ -108,18 +108,18 @@ $x->InsertData("post", "$sql",10)
                                         <th scope="col">ID</th>
                                         <th scope="col">Foto</th>
                                         <th scope="col">Emri</th>
-                                        <th scope="col">Lenda</th>
+                                        <th scope="col">Profesioni</th>
                                         <th scope="col">Opsionet</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <?php
-                           
-                                        foreach ($x->result as $key => $stafi_row) {
 
-                                            //$c_row['id']
-                                            echo ' <tr>
+                                    foreach ($x->result as $key => $stafi_row) {
+
+                                        //$c_row['id']
+                                        echo ' <tr>
                         <td> ' . $i++ . ' </td> 
                          <td> <img src="../assets/img/stafi/' . $stafi_row['stafiPhoto'] . '" class="table-img" alt="Foto" loading="lazy">  </td> 
                        
@@ -129,20 +129,20 @@ $x->InsertData("post", "$sql",10)
                         <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_stafi_delete_' . $stafi_row["stafiID"] . ' ">Fshije</a> /
                         <a class="btn btn-primary"  data-toggle="modal" data-target="#modal_stafi_edit_' . $stafi_row["stafiID"] . ' ">Nrysho</a> </td>
                          </tr>  ';
-                                            get_op_modal(
-                                                "stafi_delete_",
-                                                $stafi_row['stafiID'],
-                                                "Fshirja e Stafit <b> " . $stafi_row['stafiEmri'] . " </b>",
-                                                "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini nga stafi<b><i>  " . $stafi_row['stafiEmri'] . " " . $stafi_row['stafiMbiemri'] . " </i></b>  ",
-                                                "Po Fshije"
+                                        get_op_modal(
+                                            "stafi_delete_",
+                                            $stafi_row['stafiID'],
+                                            "Fshirja e Stafit <b> " . $stafi_row['stafiEmri'] . " </b>",
+                                            "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini nga stafi<b><i>  " . $stafi_row['stafiEmri'] . " " . $stafi_row['stafiMbiemri'] . " </i></b>  ",
+                                            "Po Fshije"
 
-                                            );
+                                        );
 
-                                            get_op_modal(
-                                                "stafi_edit_",
-                                                $stafi_row['stafiID'],
-                                                "Ndrysho Stafin <b> " . $stafi_row['stafiEmri'] . " </b>",
-                                                '                          
+                                        get_op_modal(
+                                            "stafi_edit_",
+                                            $stafi_row['stafiID'],
+                                            "Ndrysho Stafin <b> " . $stafi_row['stafiEmri'] . " </b>",
+                                            '                          
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -157,27 +157,16 @@ $x->InsertData("post", "$sql",10)
                                         </div>
                                     </div>
                                 </div>
+                            
                             <div class="form-group">
-                                        <label for="disabledTextInput" class="form-label">L&euml;nd&euml;t</label>
-                                        <select name="s_lenda" class="custom-select mb-3">
-                                            <option disabled required=""> Çfar&euml; kategorie &euml;sht&euml; postimi </option>
-                                            <?php
-                                            if ($lenda_result = mysqli_query($db, $lenda_sql)) {
-                                            
-                                                foreach ($lenda_result as $key => $lenda_row) {
-                                                     <option value=" ' . $lenda_row['lendetID'] . ' ">'    . $lenda_row['lendetEmri'] . '</option>;
-                                                }
-                                            }
-                                        ?>
-                                        </select>
                                     </div>
                         ',
-                                                "Ndrysho",
-                                                "primary"
+                                            "Ndrysho",
+                                            "primary"
 
-                                            );
-                                        }
-                                    
+                                        );
+                                    }
+
 
                                     ?>
 
@@ -192,7 +181,7 @@ $x->InsertData("post", "$sql",10)
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">L&euml;nd&euml;t</th>
+                                        <th scope="col">Profesionet</th>
                                         <th scope="col">Opsionet</th>
                                     </tr>
                                 </thead>
@@ -222,7 +211,12 @@ $x->InsertData("post", "$sql",10)
                                     ?>
                                 </tbody>
                             </table>
-
+                            <!--                if ($lenda_result = mysqli_query($db, $lenda_sql)) {
+                                            
+                                                foreach ($lenda_result as $key => $lenda_row) {
+                                                     <option value=" ' . $lenda_row['lendetID'] . ' ">'    . $lenda_row['lendetEmri'] . '</option>;
+                                                }
+                                            } -->
                         </div>
                     </div>
 
