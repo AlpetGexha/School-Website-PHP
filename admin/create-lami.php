@@ -100,21 +100,31 @@ $ca_row = $c_result->fetch_assoc();
                         <td> ' . $i++ . ' </td> 
                         <td> ' . $c_row['lamiaid'] . ' </td>
                         <td> ' . $c_row['emri'] . ' </td>
-                        <td> <textarea class="form-control" placeholder="P&euml;rshkrimi" id="floatingTextarea2" style="height: 10px">' . $c_row['colum_table'] . '</textarea> </td>
+                        <td> <textarea class="form-control" readonly="" placeholder="P&euml;rshkrimi" id="floatingTextarea2" style="height: 10px">' . $c_row['colum_table'] . '</textarea> </td>
                         <td>
-                        <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_category_' . $c_row["id"] . ' ">Fshije</a>
+                        <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_drejtimi_delete_' . $c_row["id"] . ' ">Fshije</a>
                         <a class="btn btn-primary"  data-toggle="modal" data-target="#modal_category_edit_' . $c_row["id"] . ' ">Ndrysho</a>
                         </td>
                         </tr>  ';
 
+
+                                            get_op_modal(
+                                                "drejtimi_delete_",
+                                                $c_row["id"],
+                                                "Fshirja i Kategorive",
+                                                'A jeni i sigut q&euml; d&euml;shirni ta fshni Drejtimin e <b><i> ' . $c_row['emri'] . '</b></i> ',
+                                                "Fshije!",
+
+                                            );
+
                                             get_op_modal(
                                                 "category_edit_",
                                                 $c_row["id"],
-                                                "edit",
+                                                "Ndryshimi i Kategorive",
                                                 '<h6>L&euml;nda</h6>
-                                                    <input type="text" class="form-control mt-2" name="edit_category_name" autofocus="" required="" value="' . $c_row['emri'] . '">
-                                                 <h6 class="mt-4">Teksti</h6>
-                                                    <textarea class="form-control"  id="floatingTextarea2" style="height: 220px" name="edit_category_text"> ' . $c_row['colum_table'] . '</textarea>',
+                                    <input type="text" class="form-control mt-2" name="edit_category_name" autofocus="" required="" value="' . $c_row['emri'] . '">
+                                    <h6 class="mt-4">Teksti</h6>
+                                    <textarea class="form-control"  id="floatingTextarea2" style="height: 220px" name="edit_category_text"> ' . $c_row['colum_table'] . '</textarea>',
                                                 "Ndrysho",
                                                 "primary",
 

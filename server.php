@@ -178,6 +178,8 @@ if (isset($_POST['create_post_submit'])) {
 }
 
 
+
+
 //****************Krijimi i kategorive****************//
 
 if (isset($_POST['add_lamia'])) {
@@ -406,7 +408,7 @@ if (isset($_POST['category_delete_'])) {
   $id = $_POST['category_delete_'];
 
   $sql = "DELETE  FROM lamia WHERE  idLamia = '$id'";
-  $result = mysqli_query($db, $sql);
+  $result = mysqli_query($db,   $sql);
 
   if (!$result == TRUE) {
     echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/create-lami.php';</script> ";
@@ -440,15 +442,37 @@ if (isset($_POST['aplikimi_delete_'])) {
     echo "<script>alert('Aplikimi u fshi mse sukses!'); location.href='admin/aplikimet-admin.php';</script> ";
   }
 }
+//drejtimiet
+if (isset($_POST['drejtimi_delete_'])) {
+  $id = $_POST['drejtimi_delete_'];
+
+  $sql1 = "SELECT emriPhoto from post_categories where id = '$id'";
+  $results1 = mysqli_query($db, $sql1);
+  $row1 = $results1->fetch_assoc();
+  $image = $row1['emriPhoto'];
+  unlink('assets/img/drejtimet/' . $image . '');
+
+  $sql = "DELETE  FROM post_categories WHERE  id = '$id'";
+  $result = mysqli_query($db, $sql);
+
+
+  if (
+    !$result == TRUE
+  ) {
+    echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/create-lami.php';</script> ";
+  } else {
+    echo "<script>alert('Drejtimi u fshi me sukses!'); location.href='admin/create-lami.php';</script> ";
+  }
+}
 //****************Edit****************//
 if (isset($_POST['stafi_edit_'])) {
   $id = $_POST['stafi_edit_'];
   $s_emri = ucfirst(mysqli_real_escape_string($db, $_POST['s_emri']));
   $s_mbiemri = ucfirst(mysqli_real_escape_string($db, $_POST['s_mbiemri']));
-  $s_lenda = mysqli_real_escape_string($db, $_POST['s_lenda']);
+  // $s_lenda = mysqli_real_escape_string($db, $_POST['s_lenda']);
 
   //updati nga edit.php 
-  $update = "UPDATE stafi set stafiEmri = '$s_emri', stafiMbiemri = '$s_mbiemri', stafiLenda = '$s_lenda'  where stafiID=$id";
+  $update = "UPDATE stafi set stafiEmri = '$s_emri', stafiMbiemri = '$s_mbiemri' /*, stafiLenda = '$s_lenda' */  where stafiID=$id";
   $result = mysqli_query($db, $update);
 
 
