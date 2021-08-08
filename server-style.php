@@ -62,10 +62,6 @@ function get_header($tabName, $classbody = null)
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="qendra-per-karier.php">Qendra p&euml;r Karrier&euml;</a>
-            </li>
-
-            <li class="nav-item">
               <a class="nav-link" href="apliko_online.php">Apliko Online</a>
             </li>
           </ul>
@@ -115,10 +111,24 @@ function get_footer()
           </div>
 
           <div class="col-sm-6 col-lg-3 footer-widget">
-            <h6 class="fw-title">Menagjmenti</h6>
+            <h6 class="fw-title">Postimet e fundit</h6>
             <ul class="recent-admin">
               <li>
-                <a href="admin/index.php">Paneli Menagjues</a>
+                <?php require  'config.php';
+                $sql_footer = "SELECT * FROM post ORDER BY id DESC LIMIT 5";
+                $result_footer = mysqli_query($db, $sql_footer);
+                // $row_footer = $result_footer->fetch_assoc();
+                ?>
+                <div class="row">
+                  <?php foreach ($result_footer as $row_footer) : ?>
+                    <div class="col-lg-2"><img src="assets/img/drejtimet_post/<?= $row_footer['photo'] ?>" alt="img"> </div>
+                    <div class="col-lg-10"> <a href="single.php?id=<?= $row_footer['id'] ?>"> <?= $row_footer['titulli']  ?> </a> </div>
+
+                  <?php endforeach; ?>
+                  <?php if (mysqli_num_rows($result_footer) == 0) : ?>
+                    <p>Nuk ka postime ende</p>
+                  <?php endif; ?>
+                </div>
               </li>
             </ul>
           </div>
