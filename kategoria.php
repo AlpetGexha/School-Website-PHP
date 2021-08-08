@@ -23,31 +23,39 @@ $k_id = $row['id'];
 		<div class='col-lg-8'>
 			<div class="d-flex justify-content-center flex-wrap">
 				<?php
+				// $sql = "SELECT * from post where category = '$k_id' order by id DESC";
+				// $result = mysqli_query($db, $sql);
+				$x = new Pagination();
 				$sql = "SELECT * from post where category = '$k_id' order by id DESC";
-				$result = mysqli_query($db, $sql);
+				$x->InsertData("post", "$sql", 10, "where category = '$k_id'");
 
-				while (($row = $result->fetch_assoc()) != null) {
-					echo "
-					
+
+				foreach ($x->result as $key => $row) : ?>
+
 					<div class='row g-0 bg-light  container-layout'>
-						<h1 class='mt-0'>" . $row['titulli'] . "</h1>
+						<h1 class='mt-0'><?= $row['titulli']; ?></h1>
 						<div class='col-md-6 mb-md-0 p-md-4'>
-							<img  src='assets/img/drejtimet_post/" . $row['photo'] . "' class='w-100' alt='foto'>
+							<img src='assets/img/drejtimet_post/<?= $row['photo']; ?>' class='w-100' alt='foto'>
 						</div>
 						<div class='col-md-6 p-4 ps-md-0 '>
-							<p class='body-cart-text'>" . $row['body'] .
-						"</p>
-						<a class='btn btn-outline-primary'  href='single.php?id=" . $row["id"] . "'>Lexo m&euml; shum&euml;</a>
-						</div>						
-						<p > U postua me: " . strftime('%e %B, %Y', strtotime($row['date'])) . " </p>
+							<p class='body-cart-text'><?= $row['body']; ?></p>
+							<a class='btn btn-outline-primary' href='single.php?id=<?= $row['id']; ?>'>Lexo m&euml; shum&euml;</a>
+						</div>
+						<p> U postua me: <?= strftime('%e %B, %Y', strtotime($row['date'])); ?></p>
 					</div>
-					";
-				}
-				if (mysqli_num_rows($result) == 0) {
+
+				<?php endforeach; ?>
+				<?php
+
+				if ($x->total_pages ==  0) {
 					echo "<p style = 'text-align:center;  color:red;  font-size:20px;' >Nuk ka postime </p>";
+				} else {
+					$x->getNavPages("&id=$k_id");
 				}
+				
 				?>
 			</div>
+
 		</div>
 
 		<div class="col-2">

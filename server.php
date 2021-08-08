@@ -554,13 +554,13 @@ require_once "admin/pdo.php";
 class Pagination extends DB
 {
 
-  public function InsertData($table_id, $SELECT, $pageNumber = 25)
+  public function InsertData($table_id, $SELECT, $pageNumber = 25, $whereid = "")
   {
     $perPage = $pageNumber;
 
 
     // Calculate Total pages
-    $stmt = $this->openDB()->query('SELECT count(*) FROM ' . $table_id . ' ');
+    $stmt = $this->openDB()->query('SELECT count(*) FROM ' . $table_id . " " . $whereid . '   ');
     $total_results = $stmt->fetchColumn();
     $this->total_pages = ceil($total_results / $perPage);
 
@@ -574,11 +574,13 @@ class Pagination extends DB
     $query = "" . $SELECT . " LIMIT $starting_limit,$perPage";
 
     // Fetch all users for current page
-    $this->result = $this->openDB()->query($query)->fetchAll();
+    $this->result = $this->openDB()->prepare($query);
+    $this->result->execute();
   }
 
-  public function getNavPages()
-  { ?>
+  public function getNavPages($ID = "")
+  {
+?>
     <hr>
     <div class="container-fluid">
       <div class="row">
@@ -592,19 +594,19 @@ class Pagination extends DB
                                       echo 'disabled';
                                     } ?>">
                 <a class="page-link" <?php if ($this->page > 1) {
-                                        echo "class='page-link' href='?faqja=" . $this->previous_page . "'";
+                                        echo "class='page-link' href='?faqja=" . $this->previous_page . $ID . "'";
                                       } ?>>Prapa</a>
               </li>
               <?php for ($i = 1; $i <= $this->total_pages; $i++) :
                 if ($i == $this->page) {
                   echo '                
                <li class="page-item active">
-                  <a class="page-link " href="?faqja=' . $i . '"> ' . $i . '</a>
+                  <a class="page-link " href="?faqja=' . $i . $ID . '"> ' . $i . '</a>
                 </li>';
                 } else {
                   echo '                
                <li class="page-item">
-                  <a class="page-link " href="?faqja=' . $i . '"> ' . $i . '</a>
+                  <a class="page-link " href="?faqja=' . $i . $ID . '"> ' . $i . '</a>
                 </li>';
                 }
               ?>
@@ -613,7 +615,7 @@ class Pagination extends DB
                                       echo ' disabled';
                                     } ?>">
                 <a class="page-link" <?php if (($this->page + 1) < $this->total_pages) {
-                                        echo "href='?faqja=" . $this->next_page . "'";
+                                        echo "href='?faqja=" . $this->next_page . $ID . "'";
                                       } ?>>Tjetra</a>
               </li>
             </ul>
