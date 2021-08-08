@@ -46,7 +46,8 @@ $x->InsertData("post", "$sql")
                             <td><?= $post_row['emri']; ?></td>
                             <td><?= $post_row['username']; ?></td>
                             <td><?= strftime('%e %B, %Y', strtotime($post_row['date']))  ?></td>
-                            <td> <a class="btn btn-danger" data-toggle="msodal" data-target="#modal_post_delete_<?= $post_row['id']; ?> ">Fshije</a> /
+                            <td>
+                                <a class="btn btn-danger" data-toggle="modal" data-target="#modal_post_delete_<?= $post_row['id']; ?> ">Fshije</a> /
                                 <a class="btn btn-primary" data-toggle="modal" data-target="#modal_post_edit_<?= $post_row['id']; ?> ">Nrysho</a>
                             </td>
                         </tr>
