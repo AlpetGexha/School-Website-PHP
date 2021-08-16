@@ -30,43 +30,61 @@ $x->InsertData("kontakit", "$sql");
     }
     ?>
     <h3 class="title">Kontakit</h3>
-    <div class="r-table">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">EMAIL</th>
-            <th scope="col">SMS</th>
-            <th scope="col">Opsionet</th>
-          </tr>
-        </thead>
+    <form action="#" method="POST">
+      <input class="btn btn-danger btn-sm" type='submit' value='Delete_box' name='multi_delete_box_sms' id="delete-btn">
 
-        <tbody>
-          <?php
-          $c_sql = "SELECT * from kontakit ";
-          if ($result = mysqli_query($db, $c_sql)) {
-            $i = 1;
-            foreach ($result as $key => $ko_row) {
+      <div class="r-table">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col"> <input type="checkbox" name="select-all" id="select-all" /></th>
+              <th scope="col">EMAIL</th>
+              <th scope="col">SMS</th>
+              <th scope="col">Opsionet</th>
+            </tr>
+          </thead>
 
-              //$ko_row['id']
-              echo ' <tr>
+          <tbody>
+            <?php
+            $c_sql = "SELECT * from kontakit ";
+            if ($result = mysqli_query($db, $c_sql)) {
+              $i = 1;
+              foreach ($result as $key => $ko_row) {
+
+                //$ko_row['id']
+                echo ' <tr>
+                  <td><input type="checkbox" name="multi_delete[]" value="' . $ko_row['id'] . '" /></td>
               <td> ' . $i++ . ' </td> 
               <td> ' . $ko_row['email'] . ' </td>
               <td> <textarea class="" rows="2" cols="40" readonly=""> ' . $ko_row["sms"] . '</textarea></td>
               <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_sms_' . $ko_row["id"] . ' ">Fshije</a> </td>
               </tr>  ';
+              }
             }
-          }
 
-          ?>
+            ?>
 
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </form>
     <?php $x->getNavPages();  ?>
   </div>
 
 </div>
+<script>
+  $('#select-all').click(function(event) {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
 
 </body>
 

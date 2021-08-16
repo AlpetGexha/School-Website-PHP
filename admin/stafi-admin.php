@@ -97,52 +97,53 @@ $x->InsertData("post", "$sql", 10)
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> <br>
                 <div class="row">
 
                     <div class="col-md-8">
-                        <div class="r-table">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Foto</th>
-                                        <th scope="col">Emri</th>
-                                        <th scope="col">Profesioni</th>
-                                        <th scope="col">Opsionet</th>
-                                    </tr>
-                                </thead>
+                        <form action="#" method="POST">
+                            <input class="btn btn-danger btn-sm" type='submit' value='Delete_box' name='multi_delete_box_stafi' id="delete-btn">
+                            <div class="r-table">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"> <input type="checkbox" name="select-all" id="select-all" /></th>
+                                            <th scope="col">Foto</th>
+                                            <th scope="col">Emri</th>
+                                            <th scope="col">Profesioni</th>
+                                            <th scope="col">Opsionet</th>
+                                        </tr>
+                                    </thead>
 
-                                <tbody>
-                                    <?php
+                                    <tbody>
+                                        <?php
 
-                                    foreach ($x->result as $key => $stafi_row) {
+                                        foreach ($x->result as $key => $stafi_row) {
 
-                                        //$c_row['id']
-                                        echo ' <tr>
-                        <td> ' . $i++ . ' </td> 
-                         <td> <img src="../assets/img/stafi/' . $stafi_row['stafiPhoto'] . '" class="table-img" alt="Foto" loading="lazy">  </td> 
-                       
+                                            //$c_row['id']
+                                            echo ' <tr>
+                                <td><input type="checkbox" name="multi_delete[]" value="' . $stafi_row['stafiID'] . '"></td>
+                                <td> <img src="../assets/img/stafi/' . $stafi_row['stafiPhoto'] . '" class="table-img" alt="Foto" loading="lazy">  </td> 
                         <td> ' . $stafi_row['stafiEmri'] . ' ' . $stafi_row['stafiMbiemri'] . ' </td>
                         <td> ' . $stafi_row['lendetEmri'] . '</td>
                         <td> 
                         <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_stafi_delete_' . $stafi_row["stafiID"] . ' ">Fshije</a> /
                         <a class="btn btn-primary"  data-toggle="modal" data-target="#modal_stafi_edit_' . $stafi_row["stafiID"] . ' ">Nrysho</a> </td>
                          </tr>  ';
-                                        get_op_modal(
-                                            "stafi_delete_",
-                                            $stafi_row['stafiID'],
-                                            "Fshirja e Stafit <b> " . $stafi_row['stafiEmri'] . " </b>",
-                                            "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini nga stafi<b><i>  " . $stafi_row['stafiEmri'] . " " . $stafi_row['stafiMbiemri'] . " </i></b>  ",
-                                            "Po Fshije"
+                                            get_op_modal(
+                                                "stafi_delete_",
+                                                $stafi_row['stafiID'],
+                                                "Fshirja e Stafit <b> " . $stafi_row['stafiEmri'] . " </b>",
+                                                "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini nga stafi<b><i>  " . $stafi_row['stafiEmri'] . " " . $stafi_row['stafiMbiemri'] . " </i></b>  ",
+                                                "Po Fshije"
 
-                                        );
+                                            );
 
-                                        get_op_modal(
-                                            "stafi_edit_",
-                                            $stafi_row['stafiID'],
-                                            "Ndrysho Stafin <b> " . $stafi_row['stafiEmri'] . " </b>",
-                                            '                          
+                                            get_op_modal(
+                                                "stafi_edit_",
+                                                $stafi_row['stafiID'],
+                                                "Ndrysho Stafin <b> " . $stafi_row['stafiEmri'] . " </b>",
+                                                '                          
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -161,18 +162,19 @@ $x->InsertData("post", "$sql", 10)
                             <div class="form-group">
                                     </div>
                         ',
-                                            "Ndrysho",
-                                            "primary"
+                                                "Ndrysho",
+                                                "primary"
 
-                                        );
-                                    }
+                                            );
+                                        }
 
 
-                                    ?>
+                                        ?>
 
-                                </tbody>
-                            </table>
-                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
                         <?php $x->getNavPages();  ?>
                     </div>
                     <div class="col-md-4">
@@ -225,6 +227,20 @@ $x->InsertData("post", "$sql", 10)
         </div>
 
     </div>
+
+<script>
+    $('#select-all').click(function(event) {
+        if (this.checked) {
+            $(':checkbox').each(function() {
+                this.checked = true;
+            });
+        } else {
+            $(':checkbox').each(function() {
+                this.checked = false;
+            });
+        }
+    });
+</script>
 
     </body>
 

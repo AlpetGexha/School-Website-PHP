@@ -363,8 +363,63 @@ function get_op_modal($modal_name, $m_id, $title, $text, $btn_text, $color = "da
         ';
 }
 
+//****************Multi Delete****************//
+//post
+if (isset($_POST['multi_delete_box_post'])) {
+
+  if (isset($_POST['multi_delete'])) {
+    foreach ($_POST['multi_delete'] as $deleteid) {
+      $sql1 = "SELECT photo from post where id = '$id'";
+      $results1 = mysqli_query($db, $sql1);
+      $row1 = $results1->fetch_assoc();
+      $image = $row1['photo'];
+      unlink('assets/img/drejtimet_post/' . $image);
+      $delete = "DELETE from post WHERE id=" . $deleteid;
+      mysqli_query($db, $delete);
+      header("Location: post-admin.php");
+    }
+  }
+}
+
+//aplikimet
+
+if (isset($_POST['multi_delete_box_apk'])) {
+
+  if (isset($_POST['multi_delete'])) {
+    foreach ($_POST['multi_delete'] as $deleteid) {
+      $delete = "DELETE from aplikimet WHERE id=" . $deleteid;
+      mysqli_query($db, $delete);
+      header("Location: aplikimet-admin.php");
+    }
+  }
+}
+
+//sms 
+
+if (isset($_POST['multi_delete_box_sms'])) {
+
+  if (isset($_POST['multi_delete'])) {
+    foreach ($_POST['multi_delete'] as $deleteid) {
+      $delete = "DELETE from kontakit WHERE id=" . $deleteid;
+      mysqli_query($db, $delete);
+      header("Location: kontakit-admin.php");
+    }
+  }
+}
+
+//stafi
 
 
+if (isset($_POST['multi_delete_box_stafi'])) {
+
+  if (isset($_POST['multi_delete'])) {
+    foreach ($_POST['multi_delete'] as $deleteid) {
+      $delete = "DELETE from stafi WHERE stafiID=" . $deleteid;
+      mysqli_query($db, $delete);
+      header("Location: stafi-admin.php");
+    }
+  }
+}
 //****************Delete****************//
 //stafi
 if (isset($_POST['stafi_delete_'])) {
