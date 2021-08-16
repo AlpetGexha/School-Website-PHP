@@ -230,7 +230,47 @@ include "server.php";
         }
     })
 </script>
-<br> <br> <br>
+
+<div class="container mt-5 text-center" id="Kontakti">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>Kontaktonani</h1>
+            <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum amet sequi, illum ipsam cum ea? Aut esse quia deserunt dolor velit hic, reiciendis unde quaerat animi quasi tenetur, similique vitae. </p>
+        </div>
+        <div class="col-lg-6 text-left">
+            <div class="row">
+                <div class="card-wrapper">
+                    <div class="card fat">
+                        <div class="card-body">
+                            <h4 class="card-title">Na kontakotni</h4>
+                            <form method="POST" action="#">
+
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <input id="p_titulli" type="emial" class="form-control" placeholder="E-mail" name="ko_mail">
+                                </div>
+
+                                <label>Mesazhi</label>
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" placeholder="Përshkrimi" id="floatingTextarea2 p_pershkrimi" style="height: auto;" name="ko_mesazhi" required="" oninvalid="this.setCustomValidity('Shkruani Mesazhin');" oninput="this.setCustomValidity('')"></textarea>
+                                    <label for="floatingTextarea2">Mesazhi</label>
+                                </div>
+
+                                <div class="form-group m-0">
+                                    <button type="submit" name="kontakit_submit" class="btn btn-primary btn-block">
+                                        Dergo
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
 <?php get_footer(); ?>
 
 </html>

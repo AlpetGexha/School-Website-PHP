@@ -387,6 +387,7 @@ if (isset($_POST['multi_delete_box_apk'])) {
 
   if (isset($_POST['multi_delete'])) {
     foreach ($_POST['multi_delete'] as $deleteid) {
+
       $delete = "DELETE from aplikimet WHERE id=" . $deleteid;
       mysqli_query($db, $delete);
       header("Location: aplikimet-admin.php");
@@ -408,12 +409,15 @@ if (isset($_POST['multi_delete_box_sms'])) {
 }
 
 //stafi
-
-
 if (isset($_POST['multi_delete_box_stafi'])) {
 
   if (isset($_POST['multi_delete'])) {
+    $sql1 = "SELECT stafiPhoto from stafi where stafiID = '$id'";
+    $results1 = mysqli_query($db, $sql1);
+    $row1 = $results1->fetch_assoc();
+    $image = $row1['stafiPhoto'];
     foreach ($_POST['multi_delete'] as $deleteid) {
+      unlink('assets/img/stafi/' . $image);
       $delete = "DELETE from stafi WHERE stafiID=" . $deleteid;
       mysqli_query($db, $delete);
       header("Location: stafi-admin.php");
@@ -425,6 +429,9 @@ if (isset($_POST['multi_delete_box_stafi'])) {
 if (isset($_POST['stafi_delete_'])) {
   $id = $_POST['stafi_delete_'];
 
+  $sql1 = "SELECT stafiPhoto from stafi where stafiID = '$id'";
+  $results1 = mysqli_query($db, $sql1);
+  $row1 = $results1->fetch_assoc();
   $sql = "DELETE  FROM stafi WHERE  stafiId = '$id'";
   $result = mysqli_query($db, $sql);
 

@@ -33,6 +33,8 @@ updateInfo();
     }
 </style>
 
+<br /><br />
+
 <div class="container drejtimet mt-5">
     <div class="row">
         <div class='col-lg-8'>
