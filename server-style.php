@@ -54,6 +54,11 @@ function get_header($tabName, $classbody = null)
               </a>
             </li>
             <li class="nav-item dropdown">
+              <a class="nav-link" href="index.php#Kontakti">
+                Kontakti
+              </a>
+            </li>
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                 Drejtimet
               </a>
@@ -121,8 +126,10 @@ function get_footer()
                 ?>
                 <div class="row">
                   <?php foreach ($result_footer as $row_footer) : ?>
-                    <div class="col-lg-2"><img src="assets/img/drejtimet_post/<?= $row_footer['photo'] ?>" alt="img"> </div>
-                    <div class="col-lg-10"> <a href="single.php?id=<?= $row_footer['id'] ?>"> <?= $row_footer['titulli']  ?> </a> </div>
+                    <div class="post-footer d-flex flex-nowrap p-1">
+                      <div class="col-lg-3"><img src="assets/img/drejtimet_post/<?= $row_footer['photo'] ?>" alt="img" /> </div>
+                      <div class="col-lg-9"> <a href="single.php?id=<?= $row_footer['id'] ?>"> <?= $row_footer['titulli']  ?> </a> </div>
+                    </div>
 
                   <?php endforeach; ?>
                   <?php if (mysqli_num_rows($result_footer) == 0) : ?>
