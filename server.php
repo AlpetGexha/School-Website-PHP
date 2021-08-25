@@ -14,6 +14,8 @@ function IamAdmin()
     die();
   }
 }
+$_SESSION['errors'] = "";
+
 
 //****************Regjistrimi ****************//
 if (isset($_POST['register_submit'])) {
@@ -166,14 +168,14 @@ if (isset($_POST['create_post_submit'])) {
         if ($insert) {
           echo "<script>alert('Postimi u postua me sukses'); location.href='create-post.php';</script> ";
         } else {
-          $msg = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
+          $_SESSION['errors'] = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
         }
       } else {
-        $msg = "Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb";
+        $_SESSION['errors'] = "Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb";
       }
     }
   } else {
-    $msg = 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.';
+    $_SESSION['errors'] = 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.';
   }
 }
 
@@ -189,7 +191,7 @@ if (isset($_POST['add_lamia'])) {
 
 
   if (mysqli_num_rows($result) > 0) {
-    $msg = "Kjo Lami ekzioston";
+    $_SESSION['errors'] = "Kjo Lami ekzioston";
   } else {
 
     $insert = "INSERT into lamia(lamiaid) VALUE('$c_kategory')";
@@ -202,13 +204,14 @@ if (isset($_POST['add_lamia'])) {
 if (isset($_POST['add_drejtime'])) {
   $drejtimi = ucfirst(mysqli_real_escape_string($db, $_POST['emri_drejtimi_add']));
   $lamia = mysqli_real_escape_string($db, $_POST['drejtimi_kategoria']);
+  $table = mysqli_real_escape_string($db, $_POST['colum_table_add']);
   $fileName = mysqli_real_escape_string($db, basename($_FILES["image"]["name"]));
   $sql = "SELECT * from post_categories WHERE emri= '$drejtimi' ";
   $result = mysqli_query($db, $sql);
 
 
   if (mysqli_num_rows($result) > 0) {
-    $msg = "Ky Drejtim ekzioston";
+    $_SESSION['errors'] = "Ky Drejtim ekzioston";
   }
 
   //shto extension
@@ -229,20 +232,20 @@ if (isset($_POST['add_drejtime'])) {
       if ($_FILES['image']['size'] < 10485760) {
         //compressImage($_FILES["image"]["tmp_name"], $fileDestination, 60);
         // Insert ne databases
-        $insert = "INSERT into post_categories(lamia,emri,emriPhoto) VALUE('$lamia','$drejtimi','$fileNameNew')";
+        $insert = "INSERT into post_categories(lamia,emri,emriPhoto,colum_table) VALUE('$lamia','$drejtimi','$fileNameNew','$table')";
         mysqli_query($db, $insert);
         header("Location:create-lami.php");
         if ($insert) {
           echo "<script>alert('Drejtimi u shtua me sukses'); location.href='crate-lami.php';</script> ";
         } else {
-          $msg = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
+          $_SESSION['errors'] = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
         }
       } else {
-        $msg = "Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb";
+        $_SESSION['errors'] = "Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb";
       }
     }
   } else {
-    $msg = 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.';
+    $_SESSION['errors'] = 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.';
   }
 }
 
@@ -279,6 +282,15 @@ function get_kadegoirt_menu($table)
 
 //****************Krijimi i lendeve****************//
 if (isset($_POST['add_lenda'])) {
+
+  $sql = "SELECT * FROM lenda";
+  $result = mysqli_query($db, $sql);
+  
+  $row = $result->fetch_assoc();
+
+  if (mysqli_num_rows($result) > 0) {
+    $_SESSION['errors'] = "Ky provesion ekzioston";
+  }
 
   $lenda = ucfirst(mysqli_real_escape_string($db, $_POST['lenda_add']));
 
@@ -352,7 +364,7 @@ function get_op_modal($modal_name, $m_id, $title, $text, $btn_text, $color = "da
                 ' . $text . '
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">' . $btn_cancel . '</button>
-                <button type="submit" class="btn btn-' . $color . '" id="submit" value="' . $m_id . '" name="' . $modal_name . '">' . $btn_text . '</button> 
+                <button  type="submit" class="btn btn-' . $color . '" id="submit" value="' . $m_id . '" name="' . $modal_name . '" autofocus>' . $btn_text . '</button> 
                 
                 </div>
             </div>
@@ -369,7 +381,7 @@ if (isset($_POST['multi_delete_box_post'])) {
 
   if (isset($_POST['multi_delete'])) {
     foreach ($_POST['multi_delete'] as $deleteid) {
-      $sql1 = "SELECT photo from post where id = '$id'";
+      $sql1 = "SELECT photo from post where id = '$deleteid'";
       $results1 = mysqli_query($db, $sql1);
       $row1 = $results1->fetch_assoc();
       $image = $row1['photo'];
@@ -412,12 +424,12 @@ if (isset($_POST['multi_delete_box_sms'])) {
 if (isset($_POST['multi_delete_box_stafi'])) {
 
   if (isset($_POST['multi_delete'])) {
-    $sql1 = "SELECT stafiPhoto from stafi where stafiID = '$id'";
-    $results1 = mysqli_query($db, $sql1);
-    $row1 = $results1->fetch_assoc();
-    $image = $row1['stafiPhoto'];
+    ;
     foreach ($_POST['multi_delete'] as $deleteid) {
-      unlink('assets/img/stafi/' . $image);
+      $sql1 = "SELECT stafiPhoto from stafi where stafiID = " .$deleteid;
+     $results1 = mysqli_query($db, $sql1);
+      $row1 = $results1->fetch_assoc();
+      unlink('assets/img/stafi/'.$row1['stafiPhoto']);
       $delete = "DELETE from stafi WHERE stafiID=" . $deleteid;
       mysqli_query($db, $delete);
       header("Location: stafi-admin.php");
@@ -432,6 +444,7 @@ if (isset($_POST['stafi_delete_'])) {
   $sql1 = "SELECT stafiPhoto from stafi where stafiID = '$id'";
   $results1 = mysqli_query($db, $sql1);
   $row1 = $results1->fetch_assoc();
+  unlink('assets/img/stafi/'.$row1['stafiPhoto']);
   $sql = "DELETE  FROM stafi WHERE  stafiId = '$id'";
   $result = mysqli_query($db, $sql);
 
@@ -451,17 +464,16 @@ if (isset($_POST['post_delete_'])) {
   $sql1 = "SELECT photo from post where id = '$id'";
   $results1 = mysqli_query($db, $sql1);
   $row1 = $results1->fetch_assoc();
-  $image = $row1['photo'];
-  unlink('assets/img/drejtimet_post/' . $image);
+  unlink('../assets/img/drejtimet_post/' . $row1['photo']);
 
   $sql = "DELETE  FROM post WHERE  id = '$id'";
   $result = mysqli_query($db, $sql);
 
 
   if (!$result == TRUE) {
-    echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/post-admin.php';</script> ";
+    echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='post-admin.php';</script> ";
   } else {
-    echo "<script>alert('Postimi u fshi me sukses!'); location.href='admin/post-admin.php';</script> ";
+    echo "<script>alert('Postimi u fshi me sukses!'); location.href='post-admin.php';</script> ";
   }
 }
 
@@ -484,6 +496,7 @@ if (isset($_POST['lendet_delete_'])) {
 
   $sql = "DELETE FROM lendet WHERE lendetID = '$id'";
   $result = mysqli_query($db, $sql);
+
 
   if (!$result == TRUE) {
     echo "<script>alert('Provoni përsëri'); location.href='admin/stafi-admin.php';</script> ";

@@ -343,7 +343,7 @@ function get_AdminHeader($tilte_name)
         <div class="row">
 
           <div class="col-lg-12">
-            <h1>Hello <?php echo "" . $row['username'] . "" ?>!</h1>
+            <h1>P&euml;rsh&euml;ndetje <?php echo "" . $row['username'] . "" ?>!</h1>
             <div class="alert alert-success d-flex align-items-center" role="alert">
               <strong><span class="fa fa-bullhorn fa-2x"></span> </strong>
               <div>

@@ -1,9 +1,9 @@
 <?php
+$p_titulli = "";
+$p_pershkrimi = "";
 include "../config.php";
 include "../server.php";
-$msg = "";
 ob_start();
-
 IamAdmin();
 
 
@@ -20,17 +20,13 @@ $c_row = $c_result->fetch_assoc();
 <div id="layoutSidenav_content">
 
     <div class="container mt-5 h-100">
-        <?php
-        if (!empty($msg)) {
-            echo '
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>' . $msg . ' </strong>  <br>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;<a href="apliko_online.php"></a></span>
-    </button>
-</div>';
-        }
-        ?>
+
+        <?php if (!empty($_SESSION['errors'])) : ?>
+            <div class="alert alert-danger" role="alert">
+                <strong> <?= $_SESSION['errors']; ?> </strong> <br>
+            </div>
+        <?php endif; ?>
+
         <div class="row justify-content-md-center h-100">
             <div class="card-wrapper">
                 <div class="card fat">
@@ -41,18 +37,18 @@ $c_row = $c_result->fetch_assoc();
 
                             <div class="form-group">
                                 <label>Titulli</label>
-                                <input id="p_titulli" type="text" class="form-control" placeholder="Titulli" name="p_titulli" required="" oninvalid="this.setCustomValidity('Shkruani titullin');" oninput="this.setCustomValidity('');">
+                                <input id="p_titulli" type="text" class="form-control" placeholder="Titulli" name="p_titulli" required="" value="<?= $p_titulli ?>" oninvalid="this.setCustomValidity('Shkruani titullin');" oninput="this.setCustomValidity('');">
                             </div>
 
                             <label>P&euml;rshkrimi</label>
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" placeholder="P&euml;rshkrimi" id="floatingTextarea2 p_pershkrimi" style="height: auto;" name="p_pershkrimi" required="" oninvalid="this.setCustomValidity('Shkruani P&euml;rshkrimin');" oninput="this.setCustomValidity('')"></textarea>
+                                <textarea class="form-control" placeholder="P&euml;rshkrimi" id="floatingTextarea2 p_pershkrimi" style="height: auto;" name="p_pershkrimi" required="" oninvalid="this.setCustomValidity('Shkruani P&euml;rshkrimin');" oninput="this.setCustomValidity('')"><?= $p_pershkrimi ?></textarea>
                                 <label for="floatingTextarea2">Pershkrimi</label>
                             </div>
 
                             <div class="mb-3 p_upload">
                                 <label>Foto</label>
-                                <input class="form-control" type="file" id="formFile" name="image" require="" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
+                                <input class="form-control" type="file" id="formFile" name="image" required="" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
                             </div>
 
                             <div class="form-group">

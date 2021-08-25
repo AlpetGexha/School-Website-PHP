@@ -1,5 +1,8 @@
 <?php
-$msg = "";
+$c_kategory = "";
+$drejtimi = "";
+$lamia = "";
+
 include "../server.php";
 include "../config.php";
 IamAdmin();
@@ -20,17 +23,11 @@ $ca_row = $c_result->fetch_assoc();
 
 
     <div class="container mt-5 h-100">
-        <?php
-        if (!empty($msg)) {
-            echo '
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>' . $msg . ' </strong>  <br>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;<a href="apliko_online.php"></a></span>
-    </button>
-</div>';
-        }
-        ?>
+        <?php if (!empty($_SESSION['errors'])) : ?>
+            <div class="alert alert-danger" role="alert">
+                <strong> <?= $_SESSION['errors']; ?> </strong> <br>
+            </div>
+        <?php endif; ?>
         <div class="row justify-content-md-center h-100 ">
             <div class="card-wrapper">
                 <div class="card fat">
@@ -38,7 +35,7 @@ $ca_row = $c_result->fetch_assoc();
                         <h4 class="card-title">Kategori</h4>
                         <form method="POST" action="#">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Shto Kategori" name="lamia_add" required="" autofocus="" aria-describedby="button-addon2" oninvalid="this.setCustomValidity('Shkruani kategorin');" oninput="this.setCustomValidity('');">
+                                <input type="text" class="form-control" placeholder="Shto Kategori" name="lamia_add" required="" value="<?= $c_kategory ?>" autofocus="" aria-describedby="button-addon2" oninvalid="this.setCustomValidity('Shkruani kategorin');" oninput="this.setCustomValidity('');">
                                 <button class="btn btn-outline-primary" type="submit" name="add_lamia" id="button-addon2">Shto</button>
                             </div>
                         </form>

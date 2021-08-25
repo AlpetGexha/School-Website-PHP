@@ -1,8 +1,14 @@
 <?php
+
+$s_emri = "";
+$s_mbiemri = "";
+
+
 include "../config.php";
 include "../server.php";
-$msg = "";
 ob_start();
+
+
 
 IamAdmin();
 
@@ -22,17 +28,11 @@ $x->InsertData("post", "$sql", 10)
 <div id="layoutSidenav_content">
 
     <div class="container mt-5">
-        <?php
-        if (!empty($msg)) {
-            echo '
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>' . $msg . ' </strong>  <br>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;<a href="apliko_online.php"></a></span>
-    </button>
-</div>';
-        }
-        ?>
+        <?php if (!empty($_SESSION['errors'])) : ?>
+            <div class="alert alert-danger" role="alert">
+                <strong><?= $_SESSION['errors'] ?></strong> <br>
+            </div>';
+        <?php endif; ?>
         <div class="row justify-content-md-center h-100 ">
             <div class="card-wrapper">
                 <div class="card fat">
@@ -57,21 +57,21 @@ $x->InsertData("post", "$sql", 10)
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Emri</label>
-                                                <input id="p_titulli" type="text" class="form-control" placeholder="Emri" name="s_emri" required="" oninvalid="this.setCustomValidity('Shkruani titullin');" oninput="this.setCustomValidity('');">
+                                                <input id="p_titulli" type="text" class="form-control" placeholder="Emri" name="s_emri" required="" value="<?= $s_emri ?>" oninvalid="this.setCustomValidity('Shkruani titullin');" oninput="this.setCustomValidity('');">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Mbiemri</label>
-                                                <input id="p_titulli" type="text" class="form-control" placeholder="Mbiemri" name="s_mbiemri" required="" oninvalid="this.setCustomValidity('Shkruani titullin');" oninput="this.setCustomValidity('');">
+                                                <input id="p_titulli" type="text" class="form-control" placeholder="Mbiemri" name="s_mbiemri" required="" value="<?= $s_mbiemri ?>" oninvalid="this.setCustomValidity('Shkruani titullin');" oninput="this.setCustomValidity('');">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="disabledTextInput" class="form-label">L&euml;nd&euml;t</label>
+                                        <label for="disabledTextInput" class="form-label">Provesionet</label>
                                         <select name="s_lenda" class="custom-select mb-3">
-                                            <option disabled required=""> Çfar&euml; kategorie &euml;sht&euml; postimi </option>
+                                            <option disabled required=""> Çfar&euml; provesioni ka </option>
                                             <?php
                                             if ($lenda_result = mysqli_query($db, $lenda_sql)) {
                                                 $i = 1;
@@ -85,7 +85,7 @@ $x->InsertData("post", "$sql", 10)
 
                                     <div class="mb-3 p_upload">
                                         <label>Foto</label>
-                                        <input class="form-control" type="file" id="formFile" name="image" require="" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
+                                        <input class="form-control" type="file" id="formFile" name="image" required="" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
                                     </div>
 
                                     <div class="form-group m-0">
@@ -228,19 +228,19 @@ $x->InsertData("post", "$sql", 10)
 
     </div>
 
-<script>
-    $('#select-all').click(function(event) {
-        if (this.checked) {
-            $(':checkbox').each(function() {
-                this.checked = true;
-            });
-        } else {
-            $(':checkbox').each(function() {
-                this.checked = false;
-            });
-        }
-    });
-</script>
+    <script>
+        $('#select-all').click(function(event) {
+            if (this.checked) {
+                $(':checkbox').each(function() {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function() {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
 
     </body>
 
