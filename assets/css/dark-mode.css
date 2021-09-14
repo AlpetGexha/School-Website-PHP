@@ -830,3 +830,12 @@ html .dark-mode::-webkit-scrollbar-thumb {
   background: #4e4e4e;
   border-radius: 25px;
 }
+
+.dark-mode ::selection {
+  color: black;
+  background: #4e4e4e;
+}
+
+.dark-mode .foto-kryesorse img {
+  filter: brightness(65%);
+}
