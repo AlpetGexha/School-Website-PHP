@@ -164,7 +164,8 @@ function get_footer()
       <div class="copyright">
         <div class="container">
           <p>
-            © 2021 Shkolla e Mesme e Lart&euml; Teknike "Nexhmedin Nixha" - Gjakovë
+            © 2021 Shkolla e Mesme e Lart&euml; Teknike "Nexhmedin Nixha" - Gjakov&euml; <br>
+            <p>Punuar nga <a href="https://github.com/AlpetGexh"><i>Alpet Gexha</i></a> </p>
           </p>
         </div>
       </div>
