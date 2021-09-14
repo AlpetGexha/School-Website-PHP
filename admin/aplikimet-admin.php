@@ -17,7 +17,6 @@ $x->InsertData("aplikimet", "$sql", 30);
 
 <div id="layoutSidenav_content">
 
-
     <div class="container-fluid mt-5">
         <h3 class="title">Aplikimet</h3>
         <form action="#" method="POST">
@@ -27,7 +26,8 @@ $x->InsertData("aplikimet", "$sql", 30);
                     <thead>
                         <tr>
                             <th scope="col"> <input type="checkbox" name="select-all" id="select-all" /></th>
-                            <th scope="col">Mbiemri</th>
+                            <th scope="col">Emri</th>
+                            <th scope="col">Mbiemri</th>                   
                             <th scope="col">Emri i prindit</th>
                             <th scope="col">Dit&euml;lindja</th>
                             <th scope="col">Email</th>
@@ -48,6 +48,7 @@ $x->InsertData("aplikimet", "$sql", 30);
                                 <td><?= $row['mbiemri']; ?></td>
                                 <td><?= $row['emriprindi']; ?></td>
                                 <td><?= strftime('%e %B, %Y', strtotime($row['ditelindja'])); ?></td>
+                                <td><?= $row['email']; ?></td>
                                 <td><?= $row['telefoni']; ?></td>
                                 <td><?= $row['drejtimet']; ?></td>
                                 <td><?= strftime('%e %B, %Y', strtotime($row['j_data']))  ?></td>
