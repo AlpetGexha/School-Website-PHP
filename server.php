@@ -179,8 +179,16 @@ if (isset($_POST['create_post_submit'])) {
   }
 }
 
+//**************** SMS ****************//
+if (isset($_POST['kontakit_submit'])) {
+  $email = mysqli_real_escape_string($db, $_POST['ko_mail']);
+  $sms = mysqli_real_escape_string($db, $_POST['ko_mesazhi']);
 
+  $sql = "INSERT INTO `kontakit`(`email`, `sms`)  VALUES ('$email','$sms')";
+  mysqli_query($db, $sql);
 
+  header("Location: index.php");
+}
 
 //****************Krijimi i kategorive****************//
 
@@ -285,7 +293,7 @@ if (isset($_POST['add_lenda'])) {
 
   $sql = "SELECT * FROM lenda";
   $result = mysqli_query($db, $sql);
-  
+
   $row = $result->fetch_assoc();
 
   if (mysqli_num_rows($result) > 0) {
@@ -423,13 +431,12 @@ if (isset($_POST['multi_delete_box_sms'])) {
 //stafi
 if (isset($_POST['multi_delete_box_stafi'])) {
 
-  if (isset($_POST['multi_delete'])) {
-    ;
+  if (isset($_POST['multi_delete'])) {;
     foreach ($_POST['multi_delete'] as $deleteid) {
-      $sql1 = "SELECT stafiPhoto from stafi where stafiID = " .$deleteid;
-     $results1 = mysqli_query($db, $sql1);
+      $sql1 = "SELECT stafiPhoto from stafi where stafiID = " . $deleteid;
+      $results1 = mysqli_query($db, $sql1);
       $row1 = $results1->fetch_assoc();
-      unlink('assets/img/stafi/'.$row1['stafiPhoto']);
+      unlink('assets/img/stafi/' . $row1['stafiPhoto']);
       $delete = "DELETE from stafi WHERE stafiID=" . $deleteid;
       mysqli_query($db, $delete);
       header("Location: stafi-admin.php");
@@ -444,7 +451,7 @@ if (isset($_POST['stafi_delete_'])) {
   $sql1 = "SELECT stafiPhoto from stafi where stafiID = '$id'";
   $results1 = mysqli_query($db, $sql1);
   $row1 = $results1->fetch_assoc();
-  unlink('assets/img/stafi/'.$row1['stafiPhoto']);
+  unlink('assets/img/stafi/' . $row1['stafiPhoto']);
   $sql = "DELETE  FROM stafi WHERE  stafiId = '$id'";
   $result = mysqli_query($db, $sql);
 

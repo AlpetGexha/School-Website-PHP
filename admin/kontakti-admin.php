@@ -38,6 +38,7 @@ $x->InsertData("kontakit", "$sql");
           <thead>
             <tr>
               <th scope="col"> <input type="checkbox" name="select-all" id="select-all" /></th>
+              <th scope="col">#</th>
               <th scope="col">EMAIL</th>
               <th scope="col">SMS</th>
               <th scope="col">Opsionet</th>

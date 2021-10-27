@@ -243,16 +243,16 @@ include "server.php";
                     <div class="card fat">
                         <div class="card-body">
                             <h4 class="card-title">Na kontakotni</h4>
-                            <form method="POST" action="#">
+                            <form method="POST" action="server.php">
 
                                 <div class="form-group">
-                                    <label>E-mail</label>
+                                    <label>E-mail(opsion)</label>
                                     <input id="p_titulli" type="emial" class="form-control" placeholder="E-mail" name="ko_mail">
                                 </div>
 
                                 <label>Mesazhi</label>
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" placeholder="Përshkrimi" id="floatingTextarea2 p_pershkrimi" style="height: auto;" name="ko_mesazhi" required="" oninvalid="this.setCustomValidity('Shkruani Mesazhin');" oninput="this.setCustomValidity('')"></textarea>
+                                    <textarea class="form-control" placeholder="Përshkrimi" id="floatingTextarea2" style="height: auto;" name="ko_mesazhi" required="" oninvalid="this.setCustomValidity('Shkruani Mesazhin');" oninput="this.setCustomValidity('')"></textarea>
                                     <label for="floatingTextarea2">Mesazhi</label>
                                 </div>
 
