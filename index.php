@@ -10,10 +10,10 @@ include "server.php";
 </style>
 
 <div class="foto-kryesore">
-    <img src="assets/img/foto-ballina.jpg" style="width: 100%;" alt="Foto Kryesore">
-    <div class="foto-kryesore-text">
+    <img src="assets/img/foto-ballina.jpg" style="width: 100%;" alt="<?= htmlspecialchars("Foto Kryesore Nexhmedin Nixha") ?>>
+    <!-- <div class="foto-kryesore-text">
         <h1 class="index-font"><b> Shkolla e Mesme e Lart&euml; Teknike <br>"Nexhmedin Nixha" </b></h1><br>
-    </div>
+    </div> -->
     </img>
 </div>
 
@@ -54,7 +54,7 @@ include "server.php";
                 </div>
             </div>
             <div class="col-lg-6 offset-lg-1 p-lg-0 p-4 m-auto">
-                <img src="assets/img/2.jpg" alt="Shkolla2">
+                <img src="assets/img/2.jpg" alt="<?= htmlspecialchars("Nexhmedin Nixha Synimet") ?>>
             </div>
         </div>
     </div>
@@ -111,67 +111,25 @@ include "server.php";
                 <h1 class="drejtimi-h1">Drejtimet</h1>
                 <?php
 
-                //**************** Shfaqja e rejtimeve ****************//
-                //batabasa
-                class DBa
-                {
-                    private $servername, $username, $password, $database;
+                //**************** Shfaqja e drejtimeve ****************//
+                $sql = "SELECT * FROM lamia";
+                $result = mysqli_query($db, $sql);
+                $row = mysqli_fetch_assoc($result);
 
-                    protected function connection()
-                    {
-                        $this->servername = "localhost";
-                        $this->username = "root";
-                        $this->password = "";
-                        $this->database = "nexhmedinnixha";
-
-                        $db = new mysqli($this->servername, $this->username, $this->password, $this->database);
-                        return $db;
-                    }
+                foreach ($result as $row) {
+                    echo '
+                    <div class="col">
+                        <div class="drejtimi-heading">
+                            <h2>' . $row['lamiaid'] . '</h2>
+                            <ul>';
+                    echo get_kat_link($row['idLamia']);
+                    echo '          
+                            </ul>
+                        </div>
+                    </div>
+                    
+                  ';
                 }
-
-                class Drejtimet extends DBa
-                {
-
-                    protected function getDrejtimet()
-                    {
-                        $sql = "SELECT * FROM lamia";
-                        $result = $this->connection()->query($sql);
-                        $NumRow = $result->num_rows;
-
-                        if ($NumRow > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $data[] = $row;
-                            }
-                            return $data;
-                        }
-                    }
-                }
-
-                class ViewDrejtimet extends Drejtimet
-                {
-
-                    public function showDrejtimet()
-                    {
-                        $datas = $this->getDrejtimet();
-
-                        foreach ($datas as $data) {
-                            echo '
-        <div class="col">
-            <div class="drejtimi-heading">
-                <h2>' . $data['lamiaid'] . '</h2>
-                <ul>';
-                            echo get_kat_link($data['idLamia']);
-                            echo '          
-                </ul>
-            </div>
-        </div>
-        
-      ';
-                        }
-                    }
-                }
-                $x = new ViewDrejtimet();
-                $x->showDrejtimet();
                 ?>
             </div>
         </div>
@@ -191,7 +149,7 @@ include "server.php";
                     <!-- https://picsum.photos/200/150/?random -->
                     <div class="stafi_card">
                         <div class="card">
-                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto']; ?> ">
+                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto']; ?> " alt="<?= htmlspecialchars($row['stafiEmri'] . " " .$row['stafiMbiemri'] . " - Nexhmedin Nixha"); ?>">
                             <div class="card-block">
                                 <h4 class="card-title"><b><?= $row['stafiEmri'] . " " . $row['stafiMbiemri'];  ?></b></h4>
                                 <div class="card-text mb-2">
@@ -234,15 +192,16 @@ include "server.php";
 <div class="container mt-5 text-center" id="Kontakti">
     <div class="row">
         <div class="col-lg-6">
-            <h1>Kontaktonani</h1>
-            <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum amet sequi, illum ipsam cum ea? Aut esse quia deserunt dolor velit hic, reiciendis unde quaerat animi quasi tenetur, similique vitae. </p>
+            <h1>Kontakti</h1>
+            <p>Nese keni dicka p&euml;r t&euml; kontaktuar apo dicka p&euml;r tu ankuar ju lutem dergoni nje mesazh</p>
+            <p>P&euml;r %do k&euml;rkes, ankes, apo pytje jeni t&euml; lir&euml; t&euml; na kontaktoni </p>
         </div>
         <div class="col-lg-6 text-left">
             <div class="row">
                 <div class="card-wrapper">
                     <div class="card fat">
                         <div class="card-body">
-                            <h4 class="card-title">Na kontakotni</h4>
+                            <h4 class="card-title">Na Kontaktoni</h4>
                             <form method="POST" action="server.php">
 
                                 <div class="form-group">

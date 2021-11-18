@@ -64,7 +64,7 @@ $ca_row = $c_result->fetch_assoc();
                             </div>
 
                             <div class="input-group mb-3">
-                                <input class="form-control" type="file" id="formFile" name="image" require="" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');"> <button class="btn btn-outline-primary" type="submit" name="add_drejtime" id="button-addon2">Shto</button>
+                                <input class="form-control" type="file" id="formFile" name="image" require="" accept=".jpg .png .jpeg " oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');"> <button class="btn btn-outline-primary" type="submit" name="add_drejtime" id="button-addon2">Shto</button>
                             </div>
 
                         </form>

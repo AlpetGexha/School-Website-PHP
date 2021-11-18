@@ -187,6 +187,9 @@ if (isset($_POST['kontakit_submit'])) {
   $sql = "INSERT INTO `kontakit`(`email`, `sms`)  VALUES ('$email','$sms')";
   mysqli_query($db, $sql);
 
+  echo "<script> alert('Mesazhi u dergua me sukses') </script>";
+
+
   header("Location: index.php");
 }
 
@@ -423,7 +426,7 @@ if (isset($_POST['multi_delete_box_sms'])) {
     foreach ($_POST['multi_delete'] as $deleteid) {
       $delete = "DELETE from kontakit WHERE id=" . $deleteid;
       mysqli_query($db, $delete);
-      header("Location: kontakit-admin.php");
+      header("Location: kontakti-admin.php");
     }
   }
 }
@@ -631,8 +634,12 @@ function updateInfo()
   $query->execute([':ip_address' => $_SERVER["REMOTE_ADDR"], ':user_agent' => $_SERVER["HTTP_USER_AGENT"]]);
 }
 
-//**************** Pagination ****************//
 require_once "admin/pdo.php";
+
+//**************** Pagination ****************//
+
+
+
 class Pagination extends DB
 {
 

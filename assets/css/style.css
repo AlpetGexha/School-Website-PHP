@@ -671,11 +671,12 @@ html::-webkit-scrollbar-thumb {
 /* *************** Drejtimet *************** */
 
 .body-cart-text {
+    /*
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
+    -webkit-box-orient: vertical; */
     line-height: 1.5;
     letter-spacing: 1px;
 }
@@ -736,10 +737,16 @@ html::-webkit-scrollbar-thumb {
 /* *************** fakte *************** */
 
 .fact-section {
+
     background: url(../img/fakt.jpg);
+    background-attachment: fixed;
+    /* min-height: 500px; */
+    background-position: center 0;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center 0;
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    /* background-position: center 0; */
     position: relative;
 }
 

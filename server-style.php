@@ -2,8 +2,10 @@
 include "config.php";
 ?>
 <?php
-function get_header($tabName, $classbody = null)
+function get_header($tabName, $classbody = null, $description = null)
 {
+  $description = "Shkolla e Mesme Teknike “N.Nixha” u themelua në vitin 1969 me fuzionimin e shkollës së mesme ekonomike dhe asaj të tekstilit. Në vitin shkollor 1977-78 me aplikimin e reformës shkollore dhe në bazë të nevojave të ekonomisë formohet qendra për aftësimin e mesëm të orientuar në të cilin vepron edhe qendra shkollore teknike si shkollë e mesme profesionale. Zhvillimi ekonomik dhe industrial i komunës së Gjakovës ndikoj mjaft në ngritjen e procesit arsimor. Mësimi paktik kryesisht zhvillohej në kabinete-punëtoritë e shkollës dhe organizatat punuese. Në vitin 1999 ka filluar renovimi i shkollës nga CARITASI – Belg. Krahas mësimit të rregullt në këtë shkollë mbahen aftësime të ndryshme profesionale për të rritur.Që nga shtatori i vitit 2013 shkolla ka ndrruar lokacion dhe është zhvendosur në objektin e vjetër te gjimnazit “Hajdar Dushi”. Shkolla aktualisht numëron një numër prej 517 nxënësve dhe 48 mësimëdhënës dhe personelin tjetër shërbyes dhe teknik.";
+  $url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 ?>
   <!DOCTYPE html>
   <html>
@@ -13,6 +15,31 @@ function get_header($tabName, $classbody = null)
     <title>SHMLT "Nexhmedin Nixha" – Gjakovë <?= "- " . $tabName ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta charset="utf-8">
+    <meta name='robots' content='max-image-preview:large' />
+    <meta name="Description" content="<?= $url  ?>">
+    <meta name="Author" content="Alpet Gexha">
+    <meta name="keywords" content="Nexhmedin, Nixha, Nexhmedin Nixha, Shkolla, Teknike, Makineri, Automekanik, Operator Prodhimi, Trafik Rrugor, Transport Rrugor, Elektroteknika, Informatika, Instalues Elektrik, Energjetika, Ndertimtari, Arkitektur, Ndertimtari, Tekstil, Rrobaqepsi ,Art pamor, Disajn i Veshjeve   ">
+
+    <!-- Jetpack Open Graph Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SHMLT &quot;Nexhmedin Nixha&quot; - Gjakovë" />
+    <meta property="og:description" content="<?= htmlspecialchars($description) ?>" />
+    <meta property="og:url" content='<?= $url ?>' />
+    <meta property="og:site_name" content="SHMLT &quot;Nexhmedin Nixha&quot; - Gjakovë" />
+    <meta property="og:image" content="assets/img/logo.png" /> <!-- photo url  -->
+    <meta property="og:image:width" content="200" />
+    <meta property="og:image:height" content="200" />
+    <meta property="og:image:alt" content="Nexhmedin Nixha" />
+    <meta property="og:locale" content="en_GB" />
+    <!-- <?= $url ?> -->
+    <!-- End Jetpack Open Graph Tags -->
+    <meta name="theme-color" content="#181818" />
+    <meta name="application-name" content="SHMLT &quot;Nexhmedin Nixha&quot; - Gjakovë" />
+    <meta name="msapplication-window" content="width=device-width;height=device-height" />
+    <meta name="msapplication-tooltip" content="<?= htmlspecialchars($description) ?>" />
+    <meta name="description" content="<?= htmlspecialchars($description) ?>" />
+
+
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/dark-mode.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -127,7 +154,7 @@ function get_footer()
                 <div class="row">
                   <?php foreach ($result_footer as $row_footer) : ?>
                     <div class="post-footer d-flex flex-nowrap p-1">
-                      <div class="col-lg-3"><img src="assets/img/drejtimet_post/<?= $row_footer['photo'] ?>" alt="img" /> </div>
+                      <div class="col-lg-3"><img src="assets/img/drejtimet_post/<?= $row_footer['photo'] ?>" alt="<?= htmlspecialchars($row_footer['titulli']) ?>" /> </div>
                       <div class="col-lg-9"> <a href="single.php?id=<?= $row_footer['id'] ?>"> <?= $row_footer['titulli']  ?> </a> </div>
                     </div>
 
@@ -153,7 +180,7 @@ function get_footer()
                 <p><i class="fa fa-envelope"></i>shkollateknikegj@gmail.com</p>
               </li>
               <li>
-                <p><i class="fa fa-envelope"></i> <a href="contact.php">
+                <p><i class="fa fa-envelope"></i> <a href="index.php#Kontakti">
                     Kontaktonani nëpermjet webit</a></p>
               </li>
             </ul>
@@ -165,7 +192,7 @@ function get_footer()
         <div class="container">
           <p>
             © 2021 Shkolla e Mesme e Lart&euml; Teknike "Nexhmedin Nixha" - Gjakov&euml; <br>
-            <p>Punuar nga <a href="https://github.com/AlpetGexh"><i>Alpet Gexha</i></a> </p>
+          <p>Punuar nga <a href="https://github.com/AlpetGexh"><i>Alpet Gexha</i></a> </p>
           </p>
         </div>
       </div>

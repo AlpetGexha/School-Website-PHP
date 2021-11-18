@@ -14,7 +14,7 @@ $k_id = $row['id'];
 
 <div class="banner">
 	<h1><?= $row['emri'] ?></h1>
-	<img src="assets/img/drejtimet/<?= $row['emriPhoto']; ?>"><br>
+	<img src="assets/img/drejtimet/<?= $row['emriPhoto']; ?>" alt="<?= htmlspecialchars($row['emriPhoto']) ?>"><br>
 </div>
 
 
@@ -29,16 +29,15 @@ $k_id = $row['id'];
 				$sql = "SELECT * from post where category = '$k_id' order by id DESC";
 				$x->InsertData("post", "$sql", 10, "where category = '$k_id'");
 
-
 				foreach ($x->result as $key => $row) : ?>
 
 					<div class='row g-0 bg-light  container-layout'>
 						<h1 class='mt-0'><?= $row['titulli']; ?></h1>
 						<div class='col-md-6 mb-md-0 p-md-4'>
-							<img src='assets/img/drejtimet_post/<?= $row['photo']; ?>' class='w-100' alt='foto'>
+							<img src='assets/img/drejtimet_post/<?= $row['photo']; ?>' class='w-100 ' alt='<?= htmlspecialchars($row["titulli"]) ?>'>
 						</div>
 						<div class='col-md-6 p-4 ps-md-0 '>
-							<p class='body-cart-text'><?= $row['body']; ?></p>
+							<p class='body-cart-text'><?= substr($row['body'], 0, 300) . "..." ?></p>
 							<a class='btn btn-outline-primary' href='single.php?id=<?= $row['id']; ?>'>Lexo m&euml; shum&euml;</a>
 						</div>
 						<p> U postua me: <?= strftime('%e %B, %Y', strtotime($row['date'])); ?></p>
@@ -52,7 +51,7 @@ $k_id = $row['id'];
 				} else {
 					$x->getNavPages("&id=$k_id");
 				}
-				
+
 				?>
 			</div>
 

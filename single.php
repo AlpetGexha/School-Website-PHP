@@ -15,7 +15,7 @@ $c_result = mysqli_query($db, $c_sql);
 $c_row = $c_result->fetch_assoc();
 
 ?>
-<?php get_header($c_row['emri']); ?>
+<?php get_header($c_row['emri'], null, $row['body']); ?>
 
 <?php
 require_once 'admin/conn.php';
@@ -24,7 +24,7 @@ updateInfo();
 
 <div class="banner">
     <h1><?= $c_row['emri'] ?></h1>
-    <img src="assets/img/drejtimet/<?= $c_row['emriPhoto']; ?>"><br>
+    <img src="assets/img/drejtimet/<?= $c_row['emriPhoto']; ?>" alt="<?= htmlspecialchars($c_row['emriPhoto']) ?>"><br>
 </div>
 
 <style>
@@ -44,7 +44,7 @@ updateInfo();
                     <h1 class='mt-0'><?= $row['titulli']; ?></h1>
                     <p> U postua me: <?= strftime('%e %B, %Y', strtotime($row['date'])); ?></p>
                     <div class='col-md-12 mb-md-0 p-md-4'>
-                        <img src='assets/img/drejtimet_post/<?= $row['photo']; ?>' class='w-100' alt='foto'>
+                        <img src='assets/img/drejtimet_post/<?= $row['photo']; ?>' class='w-100' alt='<?= htmlspecialchars($row["titulli"]) ?>'>
                     </div>
                     <div class='col-md-12 p-4 '>
                         <p><?= $row['body'] ?></p>

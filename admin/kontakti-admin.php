@@ -50,16 +50,17 @@ $x->InsertData("kontakit", "$sql");
             $c_sql = "SELECT * from kontakit ";
             if ($result = mysqli_query($db, $c_sql)) {
               $i = 1;
-              foreach ($result as $key => $ko_row) {
-
-                //$ko_row['id']
-                echo ' <tr>
+              if ($result !== 0) {
+                foreach ($result as $key => $ko_row) {
+                  //$ko_row['id']
+                  echo ' <tr>
                   <td><input type="checkbox" name="multi_delete[]" value="' . $ko_row['id'] . '" /></td>
               <td> ' . $i++ . ' </td> 
               <td> ' . $ko_row['email'] . ' </td>
               <td> <textarea class="" rows="2" cols="40" readonly=""> ' . $ko_row["sms"] . '</textarea></td>
               <td> <a class="btn btn-danger"  data-toggle="modal" data-target="#modal_sms_' . $ko_row["id"] . ' ">Fshije</a> </td>
               </tr>  ';
+                }
               }
             }
 
