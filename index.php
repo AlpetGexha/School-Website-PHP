@@ -10,12 +10,13 @@ include "server.php";
 </style>
 
 <div class="foto-kryesore">
-    <img src="assets/img/foto-ballina.jpg" style="width: 100%;" alt="<?= htmlspecialchars("Foto Kryesore Nexhmedin Nixha") ?>>
-    <!-- <div class="foto-kryesore-text">
-        <h1 class="index-font"><b> Shkolla e Mesme e Lart&euml; Teknike <br>"Nexhmedin Nixha" </b></h1><br>
-    </div> -->
-    </img>
-</div>
+    <div>
+        <img src="assets/img/foto-ballina.jpg" style="width: 100%;" alt="<?= htmlspecialchars("Foto Kryesore Nexhmedin Nixha") ?>">
+        <div class=" foto-kryesore-text">
+            <h1 class="index-font"><b> Shkolla e Mesme e Lart&euml; Teknike <br>"Nexhmedin Nixha" </b></h1><br>
+        </div>
+        </img>
+    </div>
 
 </div>
 
@@ -54,14 +55,14 @@ include "server.php";
                 </div>
             </div>
             <div class="col-lg-6 offset-lg-1 p-lg-0 p-4 m-auto">
-                <img src="assets/img/2.jpg" alt="<?= htmlspecialchars("Nexhmedin Nixha Synimet") ?>>
+                <img src="assets/img/2.jpg" alt="<?= htmlspecialchars("Nexhmedin Nixha Synimet") ?>">
             </div>
         </div>
     </div>
 
 </div>
 
-<div class="fact-section spad set-bg" style="width: 100%;">
+<div class=" fact-section spad set-bg" style="width: 100%;">
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-lg-3 fact">
@@ -149,7 +150,7 @@ include "server.php";
                     <!-- https://picsum.photos/200/150/?random -->
                     <div class="stafi_card">
                         <div class="card">
-                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto']; ?> " alt="<?= htmlspecialchars($row['stafiEmri'] . " " .$row['stafiMbiemri'] . " - Nexhmedin Nixha"); ?>">
+                            <img class="card-img-top" src="assets/img/stafi/<?= $row['stafiPhoto']; ?> " alt="<?= htmlspecialchars($row['stafiEmri'] . " " . $row['stafiMbiemri'] . " - Nexhmedin Nixha"); ?>">
                             <div class="card-block">
                                 <h4 class="card-title"><b><?= $row['stafiEmri'] . " " . $row['stafiMbiemri'];  ?></b></h4>
                                 <div class="card-text mb-2">
