@@ -21,11 +21,10 @@ $c_row = $c_result->fetch_assoc();
 
     <div class="container mt-5 h-100">
 
-        <?php if (!empty($_SESSION['errors'])) : ?>
-            <div class="alert alert-danger" role="alert">
-                <strong> <?= $_SESSION['errors']; ?> </strong> <br>
-            </div>
-        <?php endif; ?>
+        <?php
+        echo Session::getFlash('sukses');
+        echo Session::getFlash('error');
+        ?>
 
         <div class="row justify-content-md-center h-100">
             <div class="card-wrapper">
@@ -48,13 +47,13 @@ $c_row = $c_result->fetch_assoc();
 
                             <div class="mb-3 p_upload">
                                 <label>Foto</label>
-                                <input class="form-control" type="file" id="formFile" name="image" accept=".jpg .png .jpeg .gif" required="" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
+                                <input class="form-control" type="file" id="formFile" name="image" accept="image/*" required="" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
                             </div>
 
                             <div class="form-group">
                                 <label for="disabledTextInput" class="form-label">Kategorit</label>
                                 <select name="p_kategorit" class="custom-select mb-3">
-                                    <option disabled required=""> Çfar&euml; kategorie &euml;sht&euml; postimi </option>
+                                    <option disabled required="f"> Çfar&euml; kategorie &euml;sht&euml; postimi </option>
                                     <?php
 
                                     foreach ($c_result as $key => $c_row) {

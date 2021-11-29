@@ -5,14 +5,17 @@ include "server.php";
 if ($_GET === null) {
     header("Locasion: index");
 }
-?>
-<?php get_header("Faqja Kyresore"); ?>
+
+echo Session::getFlash('sukses');
+
+get_header("Faqja Kyresore"); ?>
 <style>
     .col {
         padding: 15px;
     }
 </style>
-
+<?php 
+?>
 <div class="foto-kryesore">
     <div>
         <img src="assets/img/foto-ballina.jpg" style="width: 100%;" alt="<?= htmlspecialchars("Foto Kryesore Nexhmedin Nixha") ?>">

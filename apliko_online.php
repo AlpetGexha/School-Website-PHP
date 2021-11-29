@@ -56,18 +56,7 @@ include 'server.php';
             <div class="card-wrapper">
                 <div class="card fat">
                     <div class="card-body">
-                        <?php
-                        if (!empty($msg)) {
-                            echo '
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Aplikacioni u dergua me sukses! Faleminderit p&euml;r aplikimin: </strong>  <br>
-                                    ' . $msg . '
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;<a href="apliko_online"></a></span>
-                                    </button>
-                                </div>';
-                        }
-                        ?>
+                        <?= Session::getFlash('sukses'); ?>
                         <h4 class="card-title">Aplikoni Tani</h4>
 
                         <form method="POST" class="my-login-validation" action="#">

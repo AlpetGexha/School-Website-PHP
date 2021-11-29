@@ -13,6 +13,12 @@ function get_header($tabName, $classbody = null, $description = null)
     <html>
 
     <head>
+        <script>
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            } //Mos u submit nese bohet refresh faqja
+        </script>
+
         <link rel='shortcut icon' type='image/x-icon' href='assets/img/logo.png'>
         <title>SHMLT "Nexhmedin Nixha" – Gjakovë <?= "- " . $tabName ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -58,6 +64,8 @@ function get_header($tabName, $classbody = null, $description = null)
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 
         <div class="header-section">
             <div class="container ">
@@ -337,12 +345,13 @@ function get_AdminHeader($tilte_name)
             </div>
 
 
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
             <script>
                 (function($) {
                     "use strict";
 
                     // Shtoni gjendje aktive në sidebar nav links
-                    var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+                    var path = window.location.href;
                     $("#layoutSidenav_nav .sb-sidenav a.nav-link").each(function() {
                         if (this.href === path) {
                             $(this).addClass("active");

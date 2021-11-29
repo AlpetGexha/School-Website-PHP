@@ -97,37 +97,14 @@ if (isset($_POST['apliko_submit'])) {
     $insert = "INSERT into aplikimet (emri,mbiemri,emriprindi,ditelindja,email,telefoni,drejtimet) VALUES('$emri','$mbiemri','$emri_p','$ditelindja','$email','$telefoni','$drejtimet')";
     mysqli_query($db, $insert);
 
-    if ($insert) {
-        echo "<script>alert(' $emri  $mbiemri për drejtimin e $drejtimet-s Do ju kontaktojm së shpejti në: Telefon: $telefoni apo në;   Email: $email Shëndet!'); location.href='apliko_online';</script> ";
-    }
+    Session::flash('sukses', 'Aplikimi u dërgua me sukses');
+    header("Location: apliko_online");
+    // echo "<script>alert(' $emri  $mbiemri për drejtimin e $drejtimet-s Do ju kontaktojm së shpejti në: Telefon: $telefoni apo në;   Email: $email Shëndet!'); location.href='apliko_online';</script> ";
     //hape nje file me emrin aplikimet.txt , "a+" Read/Write
     // $file = fopen("aplikimet.txt", "a+");
     // $teksti =  $emri . "\n" . $mbiemri . "\n" . $emri_p . "\n" . $ditelindja . "\n" . $email . "\n" . $telefoni . "\n" . $drejtimet .  "\n*********************************************************************\n";
     // fwrite($file, $teksti);
 }
-
-
-//****************Kontakit ****************//
-if (isset($_POST['contact_submit'])) {
-    $emri = mysqli_real_escape_string($db, $_POST['emri']);
-    $mbiemri = mysqli_real_escape_string($db, $_POST['mbiemri']);
-    $email = mysqli_real_escape_string($db, $_POST['email']);
-    $telefoni = mysqli_real_escape_string($db, $_POST['telefoni']);
-    $mesazhi = mysqli_real_escape_string($db, $_POST['mesazhi']);
-
-
-    //insertimi i të thënave per contact
-    $insert = "INSERT into mesazhi(emri,mbiemri,email,telefoni,mesazhi)VALUES('$emri','$mbiemri','$email','$telefoni','$mesazhi')";
-
-    if ($insert) {
-        $msg = "Mesazhi u dergua me sukses";
-    }
-    //hape nje file me emrin contact.txt , "a+" Read/Write
-    $file = fopen("contact.txt", "a+");
-
-    mysqli_query($db, $insert);
-}
-
 
 //****************Krijimi i postimeve****************//
 
@@ -135,7 +112,7 @@ if (isset($_POST['create_post_submit'])) {
     $p_titulli = mysqli_real_escape_string($db, $_POST['p_titulli']);
     $p_pershkrimi = mysqli_real_escape_string($db, $_POST['p_pershkrimi']);
     $p_kategorit = mysqli_real_escape_string($db, $_POST['p_kategorit']);
-    $u_id = mysqli_real_escape_string($db, $_SESSION['username']);
+    $u_id = mysqli_real_escape_string($db, $_SESSIOsN['username']);
 
 
     //Marrja e id nga useri 
@@ -165,21 +142,20 @@ if (isset($_POST['create_post_submit'])) {
                 // Insert ne databases
                 $insert = "INSERT INTO post (userid,titulli,body,category,photo)VALUES('$user_id','$p_titulli','$p_pershkrimi','$p_kategorit','$fileNameNew')";
                 mysqli_query($db, $insert);
-                if ($insert) {
-                    echo "<script>alert('Postimi u postua me sukses'); location.href='create-post';</script> ";
-                } else {
-                    $_SESSION['errors'] = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
-                }
+                Session::flash('sukses', 'Postimi u postua me sukses');
+                header("Location: create-post");
             } else {
-                $_SESSION['errors'] = "Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb";
+                Session::flash('error', 'Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb');
             }
+        } else {
+            Session::flash('error', 'Postimi  deshtoj ju lutem provoni perseri');
         }
     } else {
-        $_SESSION['errors'] = 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.';
+        Session::flash('error', 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.');
     }
 }
 
-//**************** SMS ****************//
+//**************** Kontakti ****************//
 if (isset($_POST['kontakit_submit'])) {
     $email = mysqli_real_escape_string($db, $_POST['ko_mail']);
     $sms = mysqli_real_escape_string($db, $_POST['ko_mesazhi']);
@@ -188,7 +164,7 @@ if (isset($_POST['kontakit_submit'])) {
     mysqli_query($db, $sql);
 
     echo "<script> alert('Mesazhi u dergua me sukses') </script>";
-
+    Session::flash('sukses', 'Mesazhi u dergua me sukses');
 
     header("Location: index");
 }
@@ -713,9 +689,60 @@ class Pagination extends DB
                     </div>
                 </div>
             </div>
-<?php
+        <?php
         } else {
             echo "<div class='alert alert-info text-center' role='alert'> Nuk ka rezultat </div>";
+        }
+    }
+}
+
+
+
+class Session
+{
+    public static function get(String $name)
+    {
+        return $_SESSION[$name];
+    }
+
+    public static function put(String $name, $value)
+    {
+        //sesioni                //vlera "md5(uniqid()));"
+        return $_SESSION[$name] = $value;
+    }
+
+    public static function exist(String $name)
+    {
+        return (isset($_SESSION[$name])) ? true : false;
+    }
+
+    public static function delete(String $name)
+    {
+        if (self::exist($name)) {
+            unset($_SESSION[$name]);
+        }
+    }
+
+    public static function flash(mixed $name, String $string = '')
+    {
+        if (self::exist($name)) {
+            $session = self::get($name);
+            self::delete($name);
+            return $session;
+        } else {
+            self::put($name, $string);
+        }
+    }
+
+    public static function getFlash(String $name, String $color = 'success')
+    {
+        if (self::exist($name)) {
+        ?>
+            <div class="alert alert-<?= $color ?> alert-dismissible fade show text-center" role="alert">
+                <?= self::flash($name); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+<?php
         }
     }
 }
