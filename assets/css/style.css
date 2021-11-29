@@ -38,6 +38,12 @@ html::-webkit-scrollbar-thumb {
     border-radius: 25px;
 }
 
+html ::selection {
+    color: black;
+    background: #bebebe;
+}
+
+
 .r-table {
     overflow-x: auto;
 }

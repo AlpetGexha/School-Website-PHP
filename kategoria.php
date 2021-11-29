@@ -7,6 +7,11 @@ $id = $_REQUEST['id'];
 $sql = "SELECT * from post_categories where id='$id'";
 $result = mysqli_query($db, $sql);
 $row = $result->fetch_assoc();
+
+if ($row === null) {
+	header("Location: index");
+}
+
 $k_id = $row['id'];
 ?>
 
@@ -38,7 +43,7 @@ $k_id = $row['id'];
 						</div>
 						<div class='col-md-6 p-4 ps-md-0 '>
 							<p class='body-cart-text'><?= substr($row['body'], 0, 300) . "..." ?></p>
-							<a class='btn btn-outline-primary' href='single.php?id=<?= $row['id']; ?>'>Lexo m&euml; shum&euml;</a>
+							<a class='btn btn-outline-primary' href='single?id=<?= $row['id']; ?>'>Lexo m&euml; shum&euml;</a>
 						</div>
 						<p> U postua me: <?= strftime('%e %B, %Y', strtotime($row['date'])); ?></p>
 					</div>

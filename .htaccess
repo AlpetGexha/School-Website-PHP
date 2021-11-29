@@ -1,0 +1,21 @@
+
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteEngine on
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
+    RewriteRule .* - [L,R=405]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+    # RewriteRule .* index [L]
+    Options +MultiViews
+    RewriteRule ^([^\.]+)$ $1.php [NC,L]
+</IfModule>
+
+# DirectoryIndex index.php
+
+ErrorDocument 403 "<body onclick='history.back()'><h1>Nuk keni akses <a style='color:red;' type='button' onclick='history.back()'>Kthehu pas</a></h1></body>"
+ErrorDocument 404 "<body onclick='history.back()'><h1>Faqja nuk egziston <a style='color:red;' type='button' onclick='history.back()'>Kthehu pas</a></h1></body>"
+# ErrorDocument 500 
+# ErrorDocument 503 

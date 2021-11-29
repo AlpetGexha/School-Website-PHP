@@ -10,6 +10,12 @@ $result = mysqli_query($db, $sql);
 $row = $result->fetch_assoc();
 $c_category = $row['category'];
 
+
+if ($row === null) {
+    header("Location: index");
+}
+
+
 $c_sql = "SELECT * from post_categories where id = '$c_category' ";
 $c_result = mysqli_query($db, $c_sql);
 $c_row = $c_result->fetch_assoc();

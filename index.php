@@ -1,6 +1,10 @@
 <?php
 include "config.php";
+
 include "server.php";
+if ($_GET === null) {
+    header("Locasion: index");
+}
 ?>
 <?php get_header("Faqja Kyresore"); ?>
 <style>
@@ -12,9 +16,11 @@ include "server.php";
 <div class="foto-kryesore">
     <div>
         <img src="assets/img/foto-ballina.jpg" style="width: 100%;" alt="<?= htmlspecialchars("Foto Kryesore Nexhmedin Nixha") ?>">
-        <div class=" foto-kryesore-text">
+        <!--       
+	   <div class=" foto-kryesore-text">
             <h1 class="index-font"><b> Shkolla e Mesme e Lart&euml; Teknike <br>"Nexhmedin Nixha" </b></h1><br>
         </div>
+		-->
         </img>
     </div>
 

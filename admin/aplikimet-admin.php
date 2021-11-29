@@ -27,7 +27,7 @@ $x->InsertData("aplikimet", "$sql", 30);
                         <tr>
                             <th scope="col"> <input type="checkbox" name="select-all" id="select-all" /></th>
                             <th scope="col">Emri</th>
-                            <th scope="col">Mbiemri</th>                   
+                            <th scope="col">Mbiemri</th>
                             <th scope="col">Emri i prindit</th>
                             <th scope="col">Dit&euml;lindja</th>
                             <th scope="col">Email</th>
@@ -36,42 +36,41 @@ $x->InsertData("aplikimet", "$sql", 30);
                             <th scope="col">Data E Regjistrimit</th>
                             <th scope="col">Opsionet</th>
                         </tr>
+
                     <tbody>
-
                         <?php
+                        if ($sql) {
+                            foreach ($x->result as $key => $row) : ?>
+                                <tr>
+                                    <td><input type='checkbox' name='multi_delete[]' value='<?= $row['id'] ?>'></td>
 
-                        foreach ($x->result as $key => $row) : ?>
-                            <tr>
-                                <td><input type='checkbox' name='multi_delete[]' value='<?= $row['id'] ?>'></td>
-
-                                <td><?= $row['emri']; ?></td>
-                                <td><?= $row['mbiemri']; ?></td>
-                                <td><?= $row['emriprindi']; ?></td>
-                                <td><?= strftime('%e %B, %Y', strtotime($row['ditelindja'])); ?></td>
-                                <td><?= $row['email']; ?></td>
-                                <td><?= $row['telefoni']; ?></td>
-                                <td><?= $row['drejtimet']; ?></td>
-                                <td><?= strftime('%e %B, %Y', strtotime($row['j_data']))  ?></td>
-                                <td><a class="btn btn-danger" data-toggle="modal" data-target="#modal_aplikimi_delete_<?= $row['id']; ?> ">Fshije</a></td>
-                            </tr>
-                            <?php
-                            get_op_modal(
-                                "aplikimi_delete_",
-                                $row['id'],
-                                "Fshirja e Aplikimit",
-                                "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini Aplikimin e<b><i>  " . $row['emri'] . "  " . $row['mbiemri'] . " </i></b>  ",
-                                "Po Fshije"
-
-                            );
-                            ?>
-                        <?php endforeach; ?>
+                                    <td><?= $row['emri']; ?></td>
+                                    <td><?= $row['mbiemri']; ?></td>
+                                    <td><?= $row['emriprindi']; ?></td>
+                                    <td><?= strftime('%e %B, %Y', strtotime($row['ditelindja'])); ?></td>
+                                    <td><?= $row['email']; ?></td>
+                                    <td><?= $row['telefoni']; ?></td>
+                                    <td><?= $row['drejtimet']; ?></td>
+                                    <td><?= strftime('%e %B, %Y', strtotime($row['j_data']))  ?></td>
+                                    <td><a class="btn btn-danger" data-toggle="modal" data-target="#modal_aplikimi_delete_<?= $row['id']; ?> ">Fshije</a></td>
+                                </tr>
+                                <?php
+                                get_op_modal(
+                                    "aplikimi_delete_",
+                                    $row['id'],
+                                    "Fshirja e Aplikimit",
+                                    "A d&euml; jeni i sigurt qe d&euml;shironi ta fshini Aplikimin e<b><i>  " . $row['emri'] . "  " . $row['mbiemri'] . " </i></b>  ",
+                                    "Po Fshije"
+                                ); ?>
+                        <?php endforeach;
+                        } ?>
                     </tbody>
                     </thead>
                 </table>
 
             </div>
         </form>
-        <?php $x->getNavPages();  ?>
+        <?php $x->getNavPages(); ?>
     </div>
 </div>
 <script>

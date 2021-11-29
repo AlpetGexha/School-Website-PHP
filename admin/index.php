@@ -2,9 +2,12 @@
 include "../config.php";
 include "../server.php";
 $msg = "";
-       
+
 ob_start();
-IamAdmin();
+if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
+    header("Location:../login");
+    die();
+}
 
 ?>
 <?php get_AdminHeader("Index"); ?>

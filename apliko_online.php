@@ -63,7 +63,7 @@ include 'server.php';
                                     <strong>Aplikacioni u dergua me sukses! Faleminderit p&euml;r aplikimin: </strong>  <br>
                                     ' . $msg . '
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;<a href="apliko_online.php"></a></span>
+                                        <span aria-hidden="true">&times;<a href="apliko_online"></a></span>
                                     </button>
                                 </div>';
                         }
