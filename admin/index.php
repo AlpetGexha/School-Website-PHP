@@ -16,6 +16,7 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
 <div id="layoutSidenav_content">
 
     <div class="container-fluid">
+        <?= Session::getFlash('sukses'); ?>
         <?= get_dashbord(); ?>
     </div>
 

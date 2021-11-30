@@ -1,5 +1,5 @@
 <?php
-$c_kategory = "";
+
 $drejtimi = "";
 $lamia = "";
 
@@ -23,11 +23,9 @@ $ca_row = $c_result->fetch_assoc();
 
 
     <div class="container mt-5 h-100">
-        <?php if (!empty($_SESSION['errors'])) : ?>
-            <div class="alert alert-danger" role="alert">
-                <strong> <?= $_SESSION['errors']; ?> </strong> <br>
-            </div>
-        <?php endif; ?>
+        <?= Session::getFlash('sukses');
+        Session::getFlash('error', 'danger');
+        ?>
         <div class="row justify-content-md-center h-100 ">
             <div class="card-wrapper">
                 <div class="card fat">
@@ -35,7 +33,7 @@ $ca_row = $c_result->fetch_assoc();
                         <h4 class="card-title">Kategori</h4>
                         <form method="POST" action="#">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Shto Kategori" name="lamia_add" required="" value="<?= $c_kategory ?>" autofocus="" aria-describedby="button-addon2" oninvalid="this.setCustomValidity('Shkruani kategorin');" oninput="this.setCustomValidity('');">
+                                <input type="text" class="form-control" placeholder="Shto Kategori" name="lamia_add" required="" autofocus="" aria-describedby="button-addon2" oninvalid="this.setCustomValidity('Shkruani kategorin');" oninput="this.setCustomValidity('');">
                                 <button class="btn btn-outline-primary" type="submit" name="add_lamia" id="button-addon2">Shto</button>
                             </div>
                         </form>
@@ -58,13 +56,13 @@ $ca_row = $c_result->fetch_assoc();
 
                             </div>
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" name="colum_table_add" placeholder="P&euml;rshkrimi" id="floatingTextarea2" style="height: 100px"></textarea>
+                                <textarea class="form-control" re name="colum_table_add" placeholder="P&euml;rshkrimi" id="floatingTextarea2" style="height: 100px"></textarea>
                                 <label for="floatingTextarea2">P&euml;rshkrimi</label>
                                 <p class="fw-light text-muted">Mund edhe t&euml; mos e shkruani tani. Keni mund&euml;si ta plot&euml;soni m&euml; posht&euml;</p>
                             </div>
 
                             <div class="input-group mb-3">
-                                <input class="form-control" type="file" id="formFile" name="image" require="" accept=".jpg .png .jpeg " oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');"> <button class="btn btn-outline-primary" type="submit" name="add_drejtime" id="button-addon2">Shto</button>
+                                <input class="form-control" type="file" id="formFile" name="image" required accept="image/*" oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');"> <button class="btn btn-outline-primary" type="submit" name="add_drejtime" id="button-addon2">Shto</button>
                             </div>
 
                         </form>

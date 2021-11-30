@@ -225,6 +225,11 @@ function get_AdminHeader($tilte_name)
     <head>
 
         <head>
+            <script>
+                if (window.history.replaceState) {
+                    window.history.replaceState(null, null, window.location.href);
+                } //Mos u submit nese bohet refresh faqja
+            </script>
             <title>Admin <?= "- " . $tilte_name ?> - N.Nixha</title>
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
             <meta charset="utf-8">

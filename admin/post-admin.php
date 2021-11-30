@@ -20,6 +20,7 @@ $x->InsertData("post", "$sql");
 
 <div id="layoutSidenav_content">
     <div class="container-fluid mt-5 h-100">
+        <?= Session::getFlash('sukses'); ?>
         <h3 class="title">Postimet</h3>
         <form action="#" method="POST">
             <input class="btn btn-danger btn-sm" type='submit' value='Delete_box' name='multi_delete_box_post' id="delete-btn">

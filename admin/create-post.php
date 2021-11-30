@@ -3,7 +3,7 @@ $p_titulli = "";
 $p_pershkrimi = "";
 include "../config.php";
 include "../server.php";
-ob_start();
+
 IamAdmin();
 
 
@@ -21,17 +21,13 @@ $c_row = $c_result->fetch_assoc();
 
     <div class="container mt-5 h-100">
 
-        <?php
-        echo Session::getFlash('sukses');
-        echo Session::getFlash('error');
-        ?>
-
         <div class="row justify-content-md-center h-100">
             <div class="card-wrapper">
                 <div class="card fat">
                     <div class="card-body">
+                        <?php Session::getFlash('sukses');
+                        Session::getFlash('error', 'danger'); ?>
                         <h4 class="card-title">Krijo Postime</h4>
-
                         <form method="POST" action="#" enctype="multipart/form-data">
 
                             <div class="form-group">

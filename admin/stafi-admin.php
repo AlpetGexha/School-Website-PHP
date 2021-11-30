@@ -28,11 +28,8 @@ $x->InsertData("post", "$sql", 10)
 <div id="layoutSidenav_content">
 
     <div class="container mt-5">
-        <?php if (!empty($_SESSION['errors'])) : ?>
-            <div class="alert alert-danger" role="alert">
-                <strong><?= $_SESSION['errors'] ?></strong> <br>
-            </div>';
-        <?php endif; ?>
+        <?= Session::getFlash('sukses');
+        echo Session::getFlash('error', 'danger') ?>
         <div class="row justify-content-md-center h-100 ">
             <div class="card-wrapper">
                 <div class="card fat">

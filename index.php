@@ -2,11 +2,10 @@
 include "config.php";
 
 include "server.php";
-if ($_GET === null) {
-    header("Locasion: index");
-}
-
-echo Session::getFlash('sukses');
+// if ($_GET === null) {
+//     header("Locasion: index");
+// }
+Session::getFlash('sukses');
 
 get_header("Faqja Kyresore"); ?>
 <style>
@@ -14,7 +13,7 @@ get_header("Faqja Kyresore"); ?>
         padding: 15px;
     }
 </style>
-<?php 
+<?php
 ?>
 <div class="foto-kryesore">
     <div>

@@ -19,6 +19,7 @@ $x->InsertData("aplikimet", "$sql", 30);
 
     <div class="container-fluid mt-5">
         <h3 class="title">Aplikimet</h3>
+        <?php Session::getFlash('sukses'); ?>
         <form action="#" method="POST">
             <div class="r-table">
                 <input class="btn btn-danger btn-sm" type='submit' value='Delete_box' name='multi_delete_box_apk' id="delete-btn">

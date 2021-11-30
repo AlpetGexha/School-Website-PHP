@@ -14,8 +14,6 @@ function IamAdmin()
         die();
     }
 }
-$_SESSION['errors'] = "";
-
 
 //****************Regjistrimi ****************//
 if (isset($_POST['register_submit'])) {
@@ -52,9 +50,7 @@ if (isset($_POST['register_submit'])) {
         $password1 = password_hash($password, PASSWORD_DEFAULT);
         $insert = "INSERT into users(emri,mbiemri,username,password,email)VALUES('$emri','$mbiemri','$username','$password1','$email')";
         mysqli_query($db, $insert);
-        if ($insert) {
-            $msgs = "Ju shtuat me sukses z/znj. $emri $mbiemri si Administrator n&euml; faqe, n&euml;se ka ndodhur ndonj&euml; gabim kontaktoni menj&euml;here me mir&euml;mbajt&euml;sit e faq&euml;s!";
-        }
+        Session::flash('sukses', 'Përdoruesi u shtua me sukses');
     }
 }
 
@@ -73,6 +69,7 @@ if (isset($_POST['login_submit'])) {
         $_SESSION['username'] = $login_username; //Username
         $_SESSION['loggedIn'] = true; //Nese passwordi edhe ne rregull
         header('Location:admin/index'); //Shko në faqe kryesore
+        Session::flash('sukses', 'Whazzzzap NIGA');
     } else {
         $msg = "Fjalekalimi &euml;sht&euml; gabim"; //errori per Password
 
@@ -98,8 +95,9 @@ if (isset($_POST['apliko_submit'])) {
     mysqli_query($db, $insert);
 
     Session::flash('sukses', 'Aplikimi u dërgua me sukses');
-    header("Location: apliko_online");
-    // echo "<script>alert(' $emri  $mbiemri për drejtimin e $drejtimet-s Do ju kontaktojm së shpejti në: Telefon: $telefoni apo në;   Email: $email Shëndet!'); location.href='apliko_online';</script> ";
+    //    echo "<script>alert(' $emri  $mbiemri për drejtimin e $drejtimet-s Do ju kontaktojm së shpejti në: Telefon: $telefoni apo në;   Email: $email Shëndet!'); location.href='apliko_online';</script> ";
+    // header("Location: apliko_online");
+
     //hape nje file me emrin aplikimet.txt , "a+" Read/Write
     // $file = fopen("aplikimet.txt", "a+");
     // $teksti =  $emri . "\n" . $mbiemri . "\n" . $emri_p . "\n" . $ditelindja . "\n" . $email . "\n" . $telefoni . "\n" . $drejtimet .  "\n*********************************************************************\n";
@@ -107,12 +105,11 @@ if (isset($_POST['apliko_submit'])) {
 }
 
 //****************Krijimi i postimeve****************//
-
 if (isset($_POST['create_post_submit'])) {
     $p_titulli = mysqli_real_escape_string($db, $_POST['p_titulli']);
     $p_pershkrimi = mysqli_real_escape_string($db, $_POST['p_pershkrimi']);
     $p_kategorit = mysqli_real_escape_string($db, $_POST['p_kategorit']);
-    $u_id = mysqli_real_escape_string($db, $_SESSIOsN['username']);
+    $u_id = mysqli_real_escape_string($db, $_SESSION['username']);
 
 
     //Marrja e id nga useri 
@@ -142,13 +139,14 @@ if (isset($_POST['create_post_submit'])) {
                 // Insert ne databases
                 $insert = "INSERT INTO post (userid,titulli,body,category,photo)VALUES('$user_id','$p_titulli','$p_pershkrimi','$p_kategorit','$fileNameNew')";
                 mysqli_query($db, $insert);
-                Session::flash('sukses', 'Postimi u postua me sukses');
-                header("Location: create-post");
+                if ($insert) {
+                    Session::flash('sukses', 'Postimi u postua me sukses');
+                } else {
+                    Session::flash('error', 'Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri');
+                }
             } else {
                 Session::flash('error', 'Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb');
             }
-        } else {
-            Session::flash('error', 'Postimi  deshtoj ju lutem provoni perseri');
         }
     } else {
         Session::flash('error', 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.');
@@ -163,7 +161,6 @@ if (isset($_POST['kontakit_submit'])) {
     $sql = "INSERT INTO `kontakit`(`email`, `sms`)  VALUES ('$email','$sms')";
     mysqli_query($db, $sql);
 
-    echo "<script> alert('Mesazhi u dergua me sukses') </script>";
     Session::flash('sukses', 'Mesazhi u dergua me sukses');
 
     header("Location: index");
@@ -179,12 +176,13 @@ if (isset($_POST['add_lamia'])) {
 
     if (mysqli_num_rows($result) > 0) {
         $_SESSION['errors'] = "Kjo Lami ekzioston";
+        Session::flash('error', 'Kjo Lami ekzioston', 'danger');
     } else {
-
         $insert = "INSERT into lamia(lamiaid) VALUE('$c_kategory')";
         mysqli_query($db, $insert);
 
-        echo "<script>alert('Lamia u shtua me sukses'); location.href='create-lami';</script> ";
+        Session::flash('sukses', 'Lamia u shtua me sukses');
+        // header("Location: create-lami");
     }
 }
 
@@ -198,7 +196,7 @@ if (isset($_POST['add_drejtime'])) {
 
 
     if (mysqli_num_rows($result) > 0) {
-        $_SESSION['errors'] = "Ky Drejtim ekzioston";
+        Session::flash('error', 'Ky Drejtim ekzioston');
     }
 
     //shto extension
@@ -221,18 +219,18 @@ if (isset($_POST['add_drejtime'])) {
                 // Insert ne databases
                 $insert = "INSERT into post_categories(lamia,emri,emriPhoto,colum_table) VALUE('$lamia','$drejtimi','$fileNameNew','$table')";
                 mysqli_query($db, $insert);
-                header("Location:create-lami");
+                // header("Location:create-lami");
                 if ($insert) {
-                    echo "<script>alert('Drejtimi u shtua me sukses'); location.href='crate-lami';</script> ";
+                    Session::flash('sukses', 'Drejtimi u postua me sukses');
                 } else {
-                    $_SESSION['errors'] = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
+                    Session::flash('error', 'Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri');
                 }
             } else {
-                $_SESSION['errors'] = "Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb";
+                Session::flash('error', 'Foto &euml;sht&euml; shum&euml; e madhe. MAXIMUMI 10mb');
             }
         }
     } else {
-        $_SESSION['errors'] = 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.';
+        Session::flash('error', 'Vet&euml;m FOTO( JPG, JPEG, PNG, & GIF) lejohen t&euml; ngarkohen.');
     }
 }
 
@@ -268,23 +266,21 @@ function get_kadegoirt_menu($table)
 
 
 //****************Krijimi i lendeve****************//
-if (isset($_POST['add_lenda'])) {
 
-    $sql = "SELECT * FROM lenda";
+if (isset($_POST['add_lenda'])) {
+    $lenda = ucfirst(mysqli_real_escape_string($db, $_POST['lenda_add']));
+    $sql = "SELECT * from lendet WHERE lendetEmri= '$lenda' ";
     $result = mysqli_query($db, $sql);
 
-    $row = $result->fetch_assoc();
 
-    if (mysqli_num_rows($result) > 0) {
-        $_SESSION['errors'] = "Ky provesion ekzioston";
+    if (mysqli_num_rows($result) != 0) {
+        Session::flash('error', 'Kjo Lami ekziston');
+    } else {
+
+        $insert = "INSERT into lendet(lendetEmri) VALUE('$lenda')";
+        mysqli_query($db, $insert);
+        Session::flash('suksess', 'Lamia u shtua me sukses');
     }
-
-    $lenda = ucfirst(mysqli_real_escape_string($db, $_POST['lenda_add']));
-
-    $insert = "INSERT into lendet(lendetEmri) VALUE('$lenda')";
-    mysqli_query($db, $insert);
-
-    echo "<script>alert('Stafi u ndryshua me sukses'); location.href='stafi-admin';</script> ";
 }
 
 
@@ -375,6 +371,7 @@ if (isset($_POST['multi_delete_box_post'])) {
             unlink('assets/img/drejtimet_post/' . $image);
             $delete = "DELETE from post WHERE id=" . $deleteid;
             mysqli_query($db, $delete);
+            // Session::flash('sukses', '');
             header("Location: post-admin");
         }
     }
@@ -386,15 +383,15 @@ if (isset($_POST['multi_delete_box_apk'])) {
 
     if (isset($_POST['multi_delete'])) {
         foreach ($_POST['multi_delete'] as $deleteid) {
-
             $delete = "DELETE from aplikimet WHERE id=" . $deleteid;
             mysqli_query($db, $delete);
-            header("Location: aplikimet-admin");
+            // header("Location: aplikimet-admin");
+            Session::flash('sukses', 'Aplikimet u fshian me sukses');
         }
     }
 }
 
-//sms 
+//sms s
 
 if (isset($_POST['multi_delete_box_sms'])) {
 
@@ -402,7 +399,8 @@ if (isset($_POST['multi_delete_box_sms'])) {
         foreach ($_POST['multi_delete'] as $deleteid) {
             $delete = "DELETE from kontakit WHERE id=" . $deleteid;
             mysqli_query($db, $delete);
-            header("Location: kontakti-admin");
+            // header("Location: kontakti-admin");
+            Session::flash('sukses', 'Mesazhet u fshian me sukses');
         }
     }
 }
@@ -418,6 +416,7 @@ if (isset($_POST['multi_delete_box_stafi'])) {
             unlink('assets/img/stafi/' . $row1['stafiPhoto']);
             $delete = "DELETE from stafi WHERE stafiID=" . $deleteid;
             mysqli_query($db, $delete);
+            Session::flash('sukses', 'Stafi u fshie me sukese');
             header("Location: stafi-admin");
         }
     }
@@ -432,14 +431,9 @@ if (isset($_POST['stafi_delete_'])) {
     $row1 = $results1->fetch_assoc();
     unlink('assets/img/stafi/' . $row1['stafiPhoto']);
     $sql = "DELETE  FROM stafi WHERE  stafiId = '$id'";
-    $result = mysqli_query($db, $sql);
+    mysqli_query($db, $sql);
 
-
-    if (!$result == TRUE) {
-        echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/stafi-admin';</script> ";
-    } else {
-        echo "<script>alert('Stafi u fshi me sukses!'); location.href='admin/stafi-admin';</script> ";
-    }
+    Session::flash('sukses', 'Stafi u fshia me sukse');
 }
 
 //postimet
@@ -450,58 +444,43 @@ if (isset($_POST['post_delete_'])) {
     $sql1 = "SELECT photo from post where id = '$id'";
     $results1 = mysqli_query($db, $sql1);
     $row1 = $results1->fetch_assoc();
-    unlink('../assets/img/drejtimet_post/' . $row1['photo']);
+    unlink('assets/img/drejtimet_post/' . $row1['photo']);
 
-    $sql = "DELETE  FROM post WHERE  id = '$id'";
-    $result = mysqli_query($db, $sql);
+    $sql = "DELETE  FROM post WHERE id = '$id'";
+    mysqli_query($db, $sql);
 
-
-    if (!$result == TRUE) {
-        echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='post-admin';</script> ";
-    } else {
-        echo "<script>alert('Postimi u fshi me sukses!'); location.href='post-admin';</script> ";
-    }
+    Session::flash('sukses', 'Postimet u fshian me sukses');
 }
 
 //lamit 
 if (isset($_POST['category_delete_'])) {
     $id = $_POST['category_delete_'];
 
-    $sql = "DELETE  FROM lamia WHERE  idLamia = '$id'";
-    $result = mysqli_query($db,   $sql);
+    $sql = "DELETE  FROM lamia WHERE idLamia = '$id'";
+    mysqli_query($db, $sql);
 
-    if (!$result == TRUE) {
-        echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/create-lami';</script> ";
-    } else {
-        echo "<script>alert('Lamia u fshi me sukses!'); location.href='admin/create-lami';</script> ";
-    }
+    Session::flash('sukses', 'Lamia u fshie me sukses');
+    header("location: admin/create-lami");
 }
 //drejtimet 
 if (isset($_POST['lendet_delete_'])) {
     $id = $_POST['lendet_delete_'];
 
     $sql = "DELETE FROM lendet WHERE lendetID = '$id'";
-    $result = mysqli_query($db, $sql);
+    mysqli_query($db, $sql);
 
-
-    if (!$result == TRUE) {
-        echo "<script>alert('Provoni përsëri'); location.href='admin/stafi-admin';</script> ";
-    } else {
-        echo "<script>alert('Drejtimi u fshi me sukses!'); location.href='admin/stafi-admin';</script> ";
-    }
+    Session::flash('sukses', 'Drejtimi u fshia me sukses');
+    header("location: admin/create-lami");
 }
 //Aplikimet
 if (isset($_POST['aplikimi_delete_'])) {
     $id = $_POST['aplikimi_delete_'];
 
     $sql = "DELETE FROM aplikimet WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
+    mysqli_query($db, $sql);
 
-    if (!$result == TRUE) {
-        echo "<script>alert('Provoni përsëri'); location.href='admin/stafi-admin';</script> ";
-    } else {
-        echo "<script>alert('Aplikimi u fshi mse sukses!'); location.href='admin/aplikimet-admin';</script> ";
-    }
+    Session::flash('sukses', 'Aplikimi u fshia me sukses');
+    // header("Location: admin/aplikimet-admin" );
 }
 //drejtimiet
 if (isset($_POST['drejtimi_delete_'])) {
@@ -514,16 +493,10 @@ if (isset($_POST['drejtimi_delete_'])) {
     unlink('assets/img/drejtimet/' . $image . '');
 
     $sql = "DELETE  FROM post_categories WHERE  id = '$id'";
-    $result = mysqli_query($db, $sql);
+    mysqli_query($db, $sql);
 
-
-    if (
-        !$result == TRUE
-    ) {
-        echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/create-lami';</script> ";
-    } else {
-        echo "<script>alert('Drejtimi u fshi me sukses!'); location.href='admin/create-lami';</script> ";
-    }
+    Session::flash('sukses', 'Drejtimi u fshia me sukses');
+    header("Location: admin/create-lami");
 }
 //****************Edit****************//
 if (isset($_POST['stafi_edit_'])) {
@@ -534,16 +507,9 @@ if (isset($_POST['stafi_edit_'])) {
 
     //updati nga edit 
     $update = "UPDATE stafi set stafiEmri = '$s_emri', stafiMbiemri = '$s_mbiemri' /*, stafiLenda = '$s_lenda' */  where stafiID=$id";
-    $result = mysqli_query($db, $update);
+    mysqli_query($db, $update);
 
-
-    if (!$result == TRUE) {
-        echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/stafi-admin';</script> ";
-    } else {
-        echo "<script>alert('Stafi u ndryshua me sukses'); location.href='admin/stafi-admin';</script> ";
-
-        //  header('Location:admin/stafi-admin');
-    }
+    Session::flash('sukses', 'Stafi u ndryshua me sukses');
 }
 //postimet
 
@@ -558,11 +524,8 @@ if (isset($_POST['post_edit_'])) {
     $post_update = "UPDATE post set titulli = '$titulli', body = '$body' where id=$id";
     mysqli_query($db, $post_update);
 
-    if ($post_update) {
-        echo "<script>alert('Postimi u ndryshua me sukses'); location.href='admin/post-admin';</script> ";
-    } else {
-        echo "<script>alert('Provoni p&euml;rs&euml;ri'); location.href='admin/post-admin';</script> ";
-    }
+    Session::flash('sukses', 'Postimi u ndryshua me sukses');
+    header("Location: admin/post-admin");
 }
 //category
 if (isset($_POST['category_edit_'])) {
@@ -576,11 +539,8 @@ if (isset($_POST['category_edit_'])) {
     $post_update = "UPDATE post_categories set emri = '$titulli', colum_table	 = '$body' where id=$id";
     mysqli_query($db, $post_update);
 
-    if ($post_update) {
-        echo "<script>alert('Drejtimi u ndryshua me sukses'); location.href='admin/create-lami';</script> ";
-    } else {
-        echo "<script>alert('Drejtimi p&euml;rs&euml;ri'); location.href='admin/create-lami';</script> ";
-    }
+    Session::flash('sukses', 'Drejtimi u ndryshua me sukses');
+    header("Location: admin/create-lami");
 }
 
 
@@ -738,9 +698,8 @@ class Session
     {
         if (self::exist($name)) {
         ?>
-            <div class="alert alert-<?= $color ?> alert-dismissible fade show text-center" role="alert">
-                <?= self::flash($name); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="alert alert-<?= $color ?> text-center" role="alert">
+                <?php echo self::flash($name); ?>
             </div>
 <?php
         }

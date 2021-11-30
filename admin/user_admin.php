@@ -18,18 +18,7 @@ $x->InsertData("users", "$sql");
 <div id="layoutSidenav_content">
 
     <div class="container-fluid mt-5 h-100">
-        <?php
-        if (!empty($msg)) {
-            echo '?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>' . $msg . ' </strong>  <br>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;<a href="apliko_online.php">s</a></span>
-                </button>
-            </div>';
-        }
-        ?>
-
+        <?= Session::getFlash('sukses'); ?>
         <h3 class="title">P&euml;rdoruesit</h3>
 
         <div class="r-table">

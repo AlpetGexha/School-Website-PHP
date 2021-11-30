@@ -18,17 +18,7 @@ $x->InsertData("kontakit", "$sql");
 <div id="layoutSidenav_content">
 
     <div class="container-fluid mt-5 h-100">
-        <?php
-        if (!empty($msg)) {
-            echo '
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>' . $msg . ' </strong>  <br>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;<a href="apliko_online.php"></a></span>
-    </button>
-</div>';
-        }
-        ?>
+        <?php echo Session::getFlash('sukses'); ?>
         <h3 class="title">Kontakit</h3>
         <form action="#" method="POST">
             <input class="btn btn-danger btn-sm" type='submit' value='Delete_box' name='multi_delete_box_sms' id="delete-btn">
