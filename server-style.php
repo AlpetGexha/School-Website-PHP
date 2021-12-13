@@ -128,6 +128,18 @@ function get_header($tabName, $classbody = null, $description = null)
 function get_footer()
 {
     ?>
+        <!-- Snow -->
+        <div class="snowflakes" aria-hidden="true">
+            <?php for ($i = 0; $i <= 20; $i++) : ?>
+                <div class="snowflake">
+                    ❅
+                </div>
+
+                <div class="snowflake">
+                    ❆
+                </div>
+            <?php endfor;   ?>
+        </div>
         <footer class="footer-section">
             <div class="container footer-top">
                 <div class="row">
@@ -257,7 +269,7 @@ function get_AdminHeader($tilte_name)
         <?php
         require "../config.php";
         $username = $_SESSION['username'];
-        $sql_admin = "SELECT u.id, u.emri, u.mbiemri, u.username,u.email,u.j_data, r.role from users u,roles r where u.username = '$username' and u.role = r.id";
+        $sql_admin = "SELECT u.id, u.emri, u.mbiemri, u.username,u.email,u.j_data,u.perm, r.role from users u,roles r where u.username = '$username' and u.role = r.id";
 
         $results_admin = mysqli_query($db, $sql_admin);
         $row_admin = $results_admin->fetch_assoc();
@@ -314,9 +326,11 @@ function get_AdminHeader($tilte_name)
                                     <a class="nav-link" href="../admin/create-lami">
                                         Kategori
                                     </a>
-                                    <a class="nav-link" href="../admin/register">
-                                        P&euml;rdorues
-                                    </a>
+                                    <?php if ($row_admin['perm'] == 1) { ?>
+                                        <a class="nav-link" href="../admin/register">
+                                            P&euml;rdorues
+                                        </a>
+                                    <?php  } ?>
                                     <a class="nav-link" href="../admin/stafi-admin">
                                         Stafi & L&euml;nd&euml;t
                                     </a>

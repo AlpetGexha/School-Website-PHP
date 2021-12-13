@@ -279,7 +279,7 @@ if (isset($_POST['add_lenda'])) {
 
         $insert = "INSERT into lendet(lendetEmri) VALUE('$lenda')";
         mysqli_query($db, $insert);
-        Session::flash('suksess', 'Lamia u shtua me sukses');
+        Session::flash('sukses', 'Lamia u shtua me sukses');
     }
 }
 
@@ -315,7 +315,8 @@ if (isset($_POST['create_staf'])) {
                 $insert = "INSERT INTO stafi(stafiPhoto, stafiEmri, stafiMbiemri, stafiLenda )VALUES('$fileNameNew','$s_emri','$s_mbiemri','$s_lenda')";
                 mysqli_query($db, $insert);
                 if ($insert) {
-                    echo "<script>alert('Stafi u krijua me sukses'); location.href='stafi-admin';</script> ";
+                    Session::flash('sukses', 'Stafi u krijua me sukses');
+                    // header("location: stafi-admin");
                 } else {
                     $msg = "Ngarkimi i fotografis&euml; d&euml;shtoi, ju lutemi provoni p&euml;rs&euml;ri";
                 }
@@ -367,8 +368,7 @@ if (isset($_POST['multi_delete_box_post'])) {
             $sql1 = "SELECT photo from post where id = '$deleteid'";
             $results1 = mysqli_query($db, $sql1);
             $row1 = $results1->fetch_assoc();
-            $image = $row1['photo'];
-            unlink('assets/img/drejtimet_post/' . $image);
+            unlink(__DIR__ . '/assets/img/drejtimet_post/' . $row1['photo']);
             $delete = "DELETE from post WHERE id=" . $deleteid;
             mysqli_query($db, $delete);
             // Session::flash('sukses', '');
@@ -413,7 +413,7 @@ if (isset($_POST['multi_delete_box_stafi'])) {
             $sql1 = "SELECT stafiPhoto from stafi where stafiID = " . $deleteid;
             $results1 = mysqli_query($db, $sql1);
             $row1 = $results1->fetch_assoc();
-            unlink('assets/img/stafi/' . $row1['stafiPhoto']);
+            unlink(__DIR__ . '/assets/img/stafi/' . $row1['stafiPhoto']);
             $delete = "DELETE from stafi WHERE stafiID=" . $deleteid;
             mysqli_query($db, $delete);
             Session::flash('sukses', 'Stafi u fshie me sukese');
@@ -429,11 +429,12 @@ if (isset($_POST['stafi_delete_'])) {
     $sql1 = "SELECT stafiPhoto from stafi where stafiID = '$id'";
     $results1 = mysqli_query($db, $sql1);
     $row1 = $results1->fetch_assoc();
-    unlink('assets/img/stafi/' . $row1['stafiPhoto']);
+    unlink(__DIR__ . '/assets/img/stafi/' . $row1['stafiPhoto']);
     $sql = "DELETE  FROM stafi WHERE  stafiId = '$id'";
     mysqli_query($db, $sql);
 
     Session::flash('sukses', 'Stafi u fshia me sukse');
+    header("Location: admin/stafi-admin");
 }
 
 //postimet
@@ -444,7 +445,7 @@ if (isset($_POST['post_delete_'])) {
     $sql1 = "SELECT photo from post where id = '$id'";
     $results1 = mysqli_query($db, $sql1);
     $row1 = $results1->fetch_assoc();
-    unlink('assets/img/drejtimet_post/' . $row1['photo']);
+    unlink(__DIR__ . '/assets/img/drejtimet_post/' . $row1['photo']);
 
     $sql = "DELETE  FROM post WHERE id = '$id'";
     mysqli_query($db, $sql);
@@ -470,7 +471,7 @@ if (isset($_POST['lendet_delete_'])) {
     mysqli_query($db, $sql);
 
     Session::flash('sukses', 'Drejtimi u fshia me sukses');
-    header("location: admin/create-lami");
+    header("location: admin/stafi-admin");
 }
 //Aplikimet
 if (isset($_POST['aplikimi_delete_'])) {
@@ -480,7 +481,7 @@ if (isset($_POST['aplikimi_delete_'])) {
     mysqli_query($db, $sql);
 
     Session::flash('sukses', 'Aplikimi u fshia me sukses');
-    // header("Location: admin/aplikimet-admin" );
+    header("Location: admin/aplikimet-admin");
 }
 //drejtimiet
 if (isset($_POST['drejtimi_delete_'])) {
@@ -489,8 +490,7 @@ if (isset($_POST['drejtimi_delete_'])) {
     $sql1 = "SELECT emriPhoto from post_categories where id = '$id'";
     $results1 = mysqli_query($db, $sql1);
     $row1 = $results1->fetch_assoc();
-    $image = $row1['emriPhoto'];
-    unlink('assets/img/drejtimet/' . $image . '');
+    unlink(__DIR__ . '/assets/img/drejtimet/' . $row1['emriPhoto']);
 
     $sql = "DELETE  FROM post_categories WHERE  id = '$id'";
     mysqli_query($db, $sql);
@@ -510,6 +510,7 @@ if (isset($_POST['stafi_edit_'])) {
     mysqli_query($db, $update);
 
     Session::flash('sukses', 'Stafi u ndryshua me sukses');
+    header("Location: admin/stafi-admin");
 }
 //postimet
 

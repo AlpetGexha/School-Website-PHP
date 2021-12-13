@@ -82,7 +82,7 @@ $x->InsertData("post", "$sql", 10)
 
                                     <div class="mb-3 p_upload">
                                         <label>Foto</label>
-                                        <input class="form-control" type="file" id="formFile" name="image" required="" accept=".jpg .png .jpeg " oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
+                                        <input class="form-control" type="file" id="formFile" name="image" required="" accept="image/* " oninvalid="this.setCustomValidity('Zgjithni Foto');" oninput="this.setCustomValidity('');">
                                     </div>
 
                                     <div class="form-group m-0">

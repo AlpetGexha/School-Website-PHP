@@ -17,7 +17,7 @@ get_header("Faqja Kyresore"); ?>
 ?>
 <div class="foto-kryesore">
     <div>
-        <img src="assets/img/foto-ballina.jpg" style="width: 100%;" alt="<?= htmlspecialchars("Foto Kryesore Nexhmedin Nixha") ?>">
+        <img src="assets/img/cover drejtiumet.jpg" style="width: 100%;" alt="<?= htmlspecialchars("Foto Kryesore Nexhmedin Nixha") ?>">
         <!--       
 	   <div class=" foto-kryesore-text">
             <h1 class="index-font"><b> Shkolla e Mesme e Lart&euml; Teknike <br>"Nexhmedin Nixha" </b></h1><br>
@@ -216,6 +216,10 @@ get_header("Faqja Kyresore"); ?>
                                 <div class="form-group">
                                     <label>E-mail(opsion)</label>
                                     <input id="p_titulli" type="emial" class="form-control" placeholder="E-mail" name="ko_mail">
+                                </div>
+                                <div class="form-outline">
+                                    <input type="text" id="form12" class="form-control" />
+                                    <label class="form-label" for="form12">Example label</label>
                                 </div>
 
                                 <label>Mesazhi</label>

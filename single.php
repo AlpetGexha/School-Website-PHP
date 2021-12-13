@@ -19,9 +19,19 @@ if ($row === null) {
 $c_sql = "SELECT * from post_categories where id = '$c_category' ";
 $c_result = mysqli_query($db, $c_sql);
 $c_row = $c_result->fetch_assoc();
-
+$c_id = $c_row['id'];
 ?>
 <?php get_header($c_row['emri'], null, $row['body']); ?>
+
+<?php
+
+$previus = "SELECT * from post where id < {$id} and category = {$c_id} ";
+$resultp = mysqli_query($db, $previus);
+
+$nexp = "SELECT * from post where id > {$id} and category = {$c_id} ";
+$nexpp = mysqli_query($db, $nexp);
+
+?>
 
 <?php
 require_once 'admin/conn.php';
@@ -55,9 +65,33 @@ updateInfo();
                     <div class='col-md-12 p-4 '>
                         <p><?= $row['body'] ?></p>
                     </div>
-
                 </div>
+
             </div>
+
+
+
+            <div class="d-flex bd-highlight mb-3">
+                <?php if ($previuspost = $resultp->fetch_assoc()) : ?>
+                    <div class="p-2 bd-highlight ml-2">
+                        <a href="single.php?id=<?= $previuspost['id'] ?>">
+                            <button type="button" class="btn btn-secondary">
+                                < E m&euml;parshme </button>
+                        </a>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($nextpost = $nexpp->fetch_assoc()) : ?>
+                    <div class="ms-auto p-2 bd-highlight mr-2">
+                        <a href="single.php?id=<?= $nextpost['id'] ?>">
+                            <button type="button" class="btn btn-secondary">
+                                Tjet&euml;r > </button>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+
         </div>
 
         <div class="col-2">
@@ -65,6 +99,7 @@ updateInfo();
             <?php if ($c_row['colum_table'] != null) : ?>
                 <div class="card m-auto first-card	" style="width: 18rem;padding: 20px; background: #FCFCFC;">
                     <h5 class="card-title text-center p-2"><b><?= $c_row['emri'] ?></b></h5>
+
                     <div class="user-media media mb-4">
                         <p>
                             <?= $c_row['colum_table'] ?>
@@ -75,6 +110,7 @@ updateInfo();
             <?php endif; ?>
             <br>
             <?php include "assets/php/colum_table.php"; ?>
+
         </div>
     </div>
 
